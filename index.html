@@ -4,275 +4,425 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UI Designer Portfolio</title>
+  <title>Tyshaun Fantilanan | UI Designer</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600&display=swap"
     rel="stylesheet">
+
+  <style>
+    :root {
+      /* LIGHT MODE */
+      --bg-color: #f8fafc;
+      --bg-gradient: radial-gradient(circle at top, #ffffff, #e2e8f0);
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --accent: #0ea5e9;
+      --nav-bg: rgba(255, 255, 255, 0.8);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --border: rgba(14, 165, 233, 0.2);
+      --grid-opacity: 0.05;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] {
+      /* DARK MODE (Futuristic typeshit) */
+      --bg-color: #020617;
+      --bg-gradient: radial-gradient(circle at top, #020617, #000);
+      --text-main: #e5e7eb;
+      --text-sub: #94a3b8;
+      --accent: #38bdf8;
+      --nav-bg: rgba(2, 6, 23, 0.7);
+      --card-bg: rgba(15, 23, 42, 0.6);
+      --border: rgba(56, 189, 248, 0.2);
+      --grid-opacity: 0.1;
+      --card-shadow: 0 0 30px rgba(56, 189, 248, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background 0.4s ease, color 0.4s ease, border 0.4s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Animated Grid Background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(14, 165, 233, var(--grid-opacity)) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, var(--grid-opacity)) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      z-index: -1;
+      animation: moveGrid 20s linear infinite;
+    }
+
+    @keyframes moveGrid {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(60px);
+      }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+
+    nav strong {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    #theme-toggle {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #theme-toggle:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Header */
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 10%;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      line-height: 1.1;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: var(--text-sub);
+      max-width: 600px;
+    }
+
+    /* Sections */
+    section {
+      padding: 8rem 10%;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::after {
+      content: "";
+      height: 1px;
+      flex-grow: 1;
+      background: var(--border);
+    }
+
+    /* About */
+    .about-content {
+      max-width: 800px;
+    }
+
+    .about-content h3 {
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .about-content p {
+      line-height: 1.8;
+      color: var(--text-sub);
+      font-size: 1.1rem;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .project-card a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .project-info {
+      padding: 1.5rem;
+    }
+
+    .project-info h3 {
+      margin-bottom: 0.5rem;
+      font-family: 'Orbitron';
+      color: var(--text-main);
+    }
+
+    .project-info p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    /* Contact */
+    #contact {
+      text-align: center;
+    }
+
+    #contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem;
+      }
+
+      .nav-links a {
+        display: none;
+      }
+
+      /* Simplified for mobile */
+      section {
+        padding: 5rem 5%;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <nav>
-    <strong>UI DESIGNER</strong>
-    <div>
+    <strong>T.FANTILANAN</strong>
+    <div class="nav-links">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
+      <a href="#projects">Work</a>
       <a href="#contact">Contact</a>
+      <button id="theme-toggle">DARK MODE</button>
     </div>
   </nav>
 
   <header>
-    <div>
-      <h1>Designing the Future for you and me</h1>
-    </div>
+    <h1>Design the Future of you and me.</h1>
+    <p>Turning complex problems into elegant, friendly, and awesome interfaces.</p>
   </header>
 
-  <section id="about" class="about">
+  <section id="about">
     <h2 class="section-title">About Me</h2>
-    <h3>Name: Tyshaun Fantilanan</h3> <br>
-    <p>
-      I'm a UI Designer specializing in futuristic, high-impact interfaces that balance aesthetics and usability.
-      I help companies and clients turn complex ideas into clean, scalable digital experiences.
-    </p>
+    <div class="about-content">
+      <h3>Tyshaun Fantilanan — UI Designer</h3>
+      <p>
+        I specialize in high-impact interfaces that bridge the gap between aesthetics and usability.
+        My design philosophy focuses on clean, Aesthetic, user friendly designs that not only look good but also provide
+        seamless user experience.
+      </p>
+    </div>
   </section>
 
   <section id="skills">
     <h2 class="section-title">Skills</h2>
-    <div class="skills">
-      <div class="skill">UI Design</div>
-      <div class="skill">UX Strategy</div>
-      <div class="skill">Wireframing</div>
-      <div class="skill">Canva / Design Products</div>
-      <div class="skill">Figma / Design Systems</div>
-      <div class="skill">Prototyping</div>
-      <div class="skill">Responsive Design</div>
-      <div class="skill">Client-Focused Design</div>
+    <div class="skills-grid">
+      <div class="skill-card">Figma</div>
+      <div class="skill-card">UI Design</div>
+      <div class="skill-card">UX Strategy</div>
+      <div class="skill-card">Prototyping</div>
+      <div class="skill-card">Wireframing</div>
+      <div class="skill-card">Design Systems</div>
+      <div class="skill-card">Canva</div>
     </div>
   </section>
 
   <section id="projects">
-    <h2 class="section-title">Sample Work</h2>
-    <div class="projects">
-      <div class="card">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="projects-grid">
+      <div class="project-card">
         <a href="indexuidesign.html" target="_blank">
-          <img src="assets/futuristic_design1.PNG" alt="Project">
+          <img src="assets/futuristic_design1.PNG" alt="Futuristic Clock UI">
+          <div class="project-info">
+            <h3>Futuristic Interface</h3>
+          </div>
         </a>
-        <div class="card-content">
-          <h3>Futuristic Clock</h3>
-        </div>
       </div>
-      <div class="card">
+      <div class="project-card">
         <a href="sample2.html" target="_blank">
-          <img src="assets/coffeeshop.PNG" alt="Project">
+          <img src="assets/coffeeshop.PNG" alt="Coffee Shop Design">
+          <div class="project-info">
+            <h3>Coffee Shop Website</h3>
+          </div>
         </a>
-        <div class="card-content">
-          <h3>Coffee Shop</h3>
-        </div>
       </div>
-      <div class="card">
+      <div class="project-card">
         <a href="sample3.html" target="_blank">
-          <img src="assets/shoeweb.PNG" alt="Project">
+          <img src="assets/shoeweb.PNG" alt="Shoe Website Design">
+          <div class="project-info">
+            <h3>Shoe Shop Website</h3>
+          </div>
         </a>
-        <div class="card-content">
-          <h3>Shoe Website</h3>
-        </div>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2 class="section-title">Work With Me</h2>
-    <p>Email: shaunrull6@gmail.com</p>
-    <p>Instagram: <a href="https://www.instagram.com/_tshn.rf/" target="_blank" rel="noopener noreferrer">@_tshn.rf</a>
-    </p>
+    <h2 class="section-title">Get In Touch</h2>
+    <p>Ready to build something amazing? Contact me.</p><br>
+    <p>Email: <a href="mailto:shaunrull6@gmail.com">shaunrull6@gmail.com</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/_tshn.rf/" target="_blank">@_tshn.rf</a></p>
   </section>
 
   <footer>
-    <!--© 2026 UI Designer · Futuristic Portfolio-->
+    &copy; 2026 Tyshaun Fantilanan.
   </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+
+    // Check for saved user preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      root.setAttribute('data-theme', 'light');
+      toggleBtn.innerText = "DARK MODE";
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (root.getAttribute('data-theme') === 'dark') {
+        root.removeAttribute('data-theme');
+        toggleBtn.innerText = "LIGHT MODE";
+        localStorage.setItem('theme', 'light');
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        toggleBtn.innerText = "LIGHT MODE";
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
 </body>
 
 </html>
-
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top, #020617, #000);
-    color: #e5e7eb;
-    overflow-x: hidden;
-  }
-
-  /* Futuristic animated grid background */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
-    z-index: -1;
-    animation: moveGrid 20s linear infinite;
-  }
-
-  @keyframes moveGrid {
-    from {
-      transform: translateY(0);
-    }
-
-    to {
-      transform: translateY(60px);
-    }
-  }
-
-  nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 1rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(14px);
-    background: rgba(2, 6, 23, 0.65);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-    z-index: 10;
-  }
-
-  nav strong {
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 2px;
-    color: #38bdf8;
-  }
-
-  nav a {
-    color: #e5e7eb;
-    margin-left: 1.5rem;
-    text-decoration: none;
-    position: relative;
-  }
-
-  nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 2px;
-    background: #38bdf8;
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover::after {
-    width: 100%;
-  }
-
-  header {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.5rem;
-    background: linear-gradient(90deg, #38bdf8, #818cf8);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  header p {
-    margin-top: 1.2rem;
-    font-size: 1.2rem;
-    color: #94a3b8;
-    max-width: 600px;
-  }
-
-  section {
-    padding: 6rem 10%;
-  }
-
-  .section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
-    color: #38bdf8;
-  }
-
-  .about p {
-    max-width: 700px;
-    color: #cbd5f5;
-  }
-
-  .skills {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .skill {
-    padding: 1.5rem;
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(56, 189, 248, 0.08), rgba(2, 6, 23, 0.9));
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
-    text-align: center;
-  }
-
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
-  }
-
-  .card {
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(2, 6, 23, 0.85);
-    border: 1px solid rgba(129, 140, 248, 0.3);
-    box-shadow: 0 0 30px rgba(129, 140, 248, 0.15);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 0 45px rgba(56, 189, 248, 0.35);
-  }
-
-  .card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    filter: saturate(1.2) contrast(1.1);
-  }
-
-  .card-content {
-    padding: 1.6rem;
-  }
-
-  footer {
-    text-align: center;
-    padding: 3rem;
-    color: #64748b;
-    border-top: 1px solid rgba(56, 189, 248, 0.2);
-  }
-
-  @media (max-width: 768px) {
-    header h1 {
-      font-size: 2.4rem;
-    }
-
-    section {
-      padding: 4rem 7%;
-    }
-  }
-</style>
