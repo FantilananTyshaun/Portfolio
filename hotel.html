@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel de Koronadal | Comfort in the Heart of South Cotabato</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3, .font-serif { font-family: 'Marcellus', serif; }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-overlay { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); }
+        .accent-gold { color: #C5A059; }
+        .bg-accent { background-color: #C5A059; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold tracking-tighter text-stone-900 leading-none">HOTEL DE KORONADAL</span>
+                <span class="text-[10px] uppercase tracking-[0.2em] text-stone-500">Koronadal City South Cotabato</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-widest">
+                <a href="#rooms" class="hover:text-amber-700 transition">Rooms</a>
+                <a href="#dining" class="hover:text-amber-700 transition">Dining</a>
+                <a href="#events" class="hover:text-amber-700 transition">Events</a>
+                <a href="#reviews" class="hover:text-amber-700 transition">Reviews</a>
+            </div>
+            <a href="tel:09103313473" class="bg-accent text-white px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-amber-800 transition">
+                Book Now
+            </a>
+        </div>
+    </nav>
+
+    <header class="relative h-[90vh] flex items-center justify-center text-center text-white">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=2070" class="w-full h-full object-cover" alt="Habi Hotel Exterior">
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+        <div class="relative z-10 px-6">
+            <span class="uppercase tracking-[0.5em] text-sm mb-4 block">Welcome to Koronadal</span>
+            <h1 class="text-5xl md:text-7xl mb-6">Mabuhay! Experience <br>True Hospitality.</h1>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light italic">
+                Located at the corner of Gensan Drive and Cayetano Arellano St.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-stone-900 px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-stone-100 transition">View Our Rooms</button>
+                <button class="border border-white text-white px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-white/10 transition">Special Events</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div>
+                <div class="text-3xl accent-gold mb-4">📍</div>
+                <h3 class="text-xl mb-2">Prime Location</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">Easy access to the heart of Koronadal City, perfect for business and leisure travelers.</p>
+            </div>
+            <div>
+                <div class="text-3xl accent-gold mb-4">🍳</div>
+                <h3 class="text-xl mb-2">Fresh Breakfast</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">Guests love our fresh variety and respectful staff service to start your morning right.</p>
+            </div>
+            <div>
+                <div class="text-3xl accent-gold mb-4">🏳️‍🌈</div>
+                <h3 class="text-xl mb-2">Inclusive Space</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">A proud LGBTQ+ friendly establishment where everyone is treated with dignity and kindness.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rooms" class="py-20 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl mb-2">Refined Accommodations</h2>
+                    <p class="text-stone-500">Clean, comfortable, and designed for rest.</p>
+                </div>
+                <a href="#" class="text-xs font-bold uppercase tracking-widest border-b border-stone-400 pb-1">See all rooms</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="group cursor-pointer">
+                    <div class="overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=2070" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500" alt="Executive Suite">
+                    </div>
+                    <h3 class="text-2xl mb-1">Executive Suites</h3>
+                    <p class="text-stone-500 text-sm">Spacious living areas with premium amenities.</p>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=2070" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500" alt="Deluxe Room">
+                    </div>
+                    <h3 class="text-2xl mb-1">Deluxe Rooms</h3>
+                    <p class="text-stone-500 text-sm">The perfect balance of comfort and value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl mb-12">Guest Experiences</h2>
+            <div class="space-y-12">
+                <blockquote class="italic text-xl text-stone-600">
+                    "My experience at this hotel was excellent. The breakfast had a good variety and everything tasted fresh. The rooms were clean and comfortable. The staff were kind and respectful."
+                    <cite class="block mt-4 text-sm font-bold uppercase tracking-widest not-italic text-stone-900">— Nouman Mughal, Local Guide</cite>
+                </blockquote>
+                <div class="h-px bg-stone-200 w-24 mx-auto"></div>
+                <blockquote class="italic text-xl text-stone-600">
+                    "Great experience, great room and food served. Great place. Must visit!"
+                    <cite class="block mt-4 text-sm font-bold uppercase tracking-widest not-italic text-stone-900">— Emi Estorque, Pharmacist Day Celebration</cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-stone-900 text-stone-400 py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-stone-800 pb-12">
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Contact Us</h4>
+                <p class="mb-2">Gensan Drive, Cor Cayetano Arellano St,</p>
+                <p class="mb-4">Koronadal, South Cotabato</p>
+                <p class="text-white font-bold">0910 331 3473</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://facebook.com" class="hover:text-white transition">Facebook Page</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Connect</h4>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white">FB</a>
+                    <a href="#" class="hover:text-white">IG</a>
+                    <a href="#" class="hover:text-white">TW</a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 flex justify-between items-center text-[10px] uppercase tracking-widest">
+            <p>&copy; 2026 Hotel de Koronadal</p>
+        </div>
+    </footer>
+
+</body>
+</html>
