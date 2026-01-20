@@ -406,15 +406,15 @@
 
     // Check for saved user preference
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      root.setAttribute('data-theme', 'light');
-      toggleBtn.innerText = "DARK MODE";
+    if (savedTheme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      toggleBtn.innerText = "LIGHT MODE";
     }
 
     toggleBtn.addEventListener('click', () => {
       if (root.getAttribute('data-theme') === 'dark') {
         root.removeAttribute('data-theme');
-        toggleBtn.innerText = "LIGHT MODE";
+        toggleBtn.innerText = "DARK MODE";
         localStorage.setItem('theme', 'light');
       } else {
         root.setAttribute('data-theme', 'dark');
