@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Velocity - Difficulty Evolution</title>
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff00ea;
+            --glass: rgba(15, 15, 25, 0.85);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background: #000;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            display: block;
+            background: linear-gradient(to bottom, #050505, #111);
+            margin: 0 auto;
+            border-left: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        /* --- ADVANCED UI --- */
+        .hud {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            padding: 40px;
+        }
+
+        .panel {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+        }
+
+        /* TOP LEFT: PROGRESS */
+        .top-left {
+            position: absolute; top: 30px; left: 30px;
+            min-width: 180px;
+        }
+
+        .label { font-size: 10px; color: var(--neon-blue); letter-spacing: 2px; }
+        .value { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+
+        /* BOTTOM RIGHT: SPEEDOMETER */
+        .bottom-right {
+            position: absolute; bottom: 30px; right: 30px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            border: 4px double var(--neon-blue);
+        }
+
+        /* DIFFICULTY INDICATOR */
+        .difficulty-meter {
+            position: absolute; top: 30px; left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        #level-tag { color: var(--neon-pink); font-size: 18px; text-shadow: 0 0 10px var(--neon-pink); }
+
+        #game-over {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; display: none;
+            pointer-events: all; text-align: center;
+        }
+
+        button {
+            background: none; border: 1px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 10px 30px;
+            cursor: pointer; font-family: 'Orbitron';
+            transition: 0.3s;
+        }
+        button:hover { background: var(--neon-blue); color: black; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="hud">
+        <div class="top-left panel">
+            <div class="label">DISTANCE</div>
+            <div class="value" id="dist-val">0000</div>
+            <div class="label">SCORE</div>
+            <div class="value" id="score-val" style="color: var(--neon-pink)">0</div>
+        </div>
+
+        <div class="difficulty-meter">
+            <div class="label">ENGINE INTENSITY</div>
+            <div id="level-tag">LEVEL 1</div>
+        </div>
+
+        <div class="bottom-right panel">
+            <div class="label">SPEED</div>
+            <div class="value" id="speed-num">0</div>
+            <div class="label">KM/H</div>
+        </div>
+    </div>
+
+    <div id="game-over" class="panel">
+        <h1 style="color: var(--neon-pink)">CRASH DETECTED</h1>
+        <p>SYSTEM REBOOT REQUIRED</p>
+        <button onclick="location.reload()">RE-INITIALIZE</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 450;
+        canvas.height = window.innerHeight;
+
+        let gameActive = true;
+        let score = 0;
+        let distance = 0;
+        let baseSpeed = 5;
+        let difficultyLevel = 1;
+        let spawnRate = 1500; // ms between spawns
+        let lastSpawn = 0;
+
+        const player = { x: 200, y: canvas.height - 120, w: 45, h: 80 };
+        let enemies = [];
+        const keys = {};
+
+        window.addEventListener('keydown', e => keys[e.code] = true);
+        window.addEventListener('keyup', e => keys[e.code] = false);
+
+        function updateDifficulty() {
+            // Level up every 500 score
+            let newLevel = Math.floor(score / 500) + 1;
+            if (newLevel !== difficultyLevel) {
+                difficultyLevel = newLevel;
+                document.getElementById('level-tag').innerText = `LEVEL ${difficultyLevel}`;
+                baseSpeed += 1.5;
+                spawnRate = Math.max(400, 1500 - (difficultyLevel * 150));
+            }
+        }
+
+        function spawnEnemy() {
+            const now = Date.now();
+            if (now - lastSpawn > spawnRate) {
+                const lane = Math.floor(Math.random() * 3);
+                enemies.push({
+                    x: lane * (canvas.width / 3) + (canvas.width / 6 - 22),
+                    y: -100,
+                    w: 45,
+                    h: 80,
+                    speed: baseSpeed + (Math.random() * difficultyLevel)
+                });
+                lastSpawn = now;
+            }
+        }
+
+        function update() {
+            if (!gameActive) return;
+
+            // Player Control
+            if ((keys['ArrowLeft'] || keys['KeyA']) && player.x > 10) player.x -= 8;
+            if ((keys['ArrowRight'] || keys['KeyD']) && player.x < canvas.width - 55) player.x += 8;
+
+            // Stats Update
+            distance += Math.floor(baseSpeed / 2);
+            document.getElementById('dist-val').innerText = distance.toString().padStart(4, '0');
+            document.getElementById('speed-num').innerText = Math.floor(baseSpeed * 22);
+            document.getElementById('score-val').innerText = score;
+
+            updateDifficulty();
+            spawnEnemy();
+
+            // Enemy Logic
+            enemies.forEach((en, i) => {
+                en.y += en.speed;
+
+                // Collision
+                if (player.x < en.x + en.w && player.x + player.w > en.x &&
+                    player.y < en.y + en.h && player.y + player.h > en.y) {
+                    gameActive = false;
+                    document.getElementById('game-over').style.display = 'block';
+                }
+
+                // Off-screen
+                if (en.y > canvas.height) {
+                    enemies.splice(i, 1);
+                    score += 50;
+                }
+            });
+
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Road Lines
+            ctx.setLineDash([30, 50]);
+            ctx.strokeStyle = 'rgba(0, 242, 255, 0.2)';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 3, 0); ctx.lineTo(canvas.width / 3, canvas.height);
+            ctx.moveTo(canvas.width * 2/3, 0); ctx.lineTo(canvas.width * 2/3, canvas.height);
+            ctx.stroke();
+
+            // Player Car (Neon Blue)
+            ctx.shadowBlur = 15; ctx.shadowColor = '#00f2ff';
+            ctx.fillStyle = '#00f2ff';
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            ctx.fillStyle = '#000';
+            ctx.fillRect(player.x + 5, player.y + 15, player.w - 10, 20); // Windshield
+
+            // Enemy Cars (Neon Pink)
+            ctx.shadowColor = '#ff00ea';
+            ctx.fillStyle = '#ff00ea';
+            enemies.forEach(en => {
+                ctx.fillRect(en.x, en.y, en.w, en.h);
+                ctx.fillStyle = '#000';
+                ctx.fillRect(en.x + 5, en.y + 50, en.w - 10, 20); // Rear window
+                ctx.fillStyle = '#ff00ea';
+            });
+        }
+
+        update();
+    </script>
+</body>
+</html>
