@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Koronadal | City Guide</title>
+    <style>
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        :root {
+            --primary: #1a5e20;
+            /* Nature Green */
+            --accent: #fbc02d;
+            /* Golden Sun */
+            --dark: #1e272e;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            scroll-behavior: smooth;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(rgba(26, 94, 32, 0.8), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .search-container {
+            margin-top: 30px;
+        }
+
+        input[type="text"] {
+            padding: 15px 25px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            transform: scale(1.05);
+        }
+
+        /* Filter Buttons */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: none;
+            background: var(--white);
+            color: var(--primary);
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(26, 94, 32, 0.3);
+        }
+
+        /* Listing Grid */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Link Wrapper Styling */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            background: #e8f5e9;
+            padding: 6px 12px;
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .card h3 {
+            margin: 15px 0 10px 0;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #576574;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Explore Koronadal City</h1>
+        <p>Discover the best Coffee, Dining, and Shopping in the Crown City</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="searchFunction()"
+                placeholder="Search for your favorite spot...">
+        </div>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterSelection('all')">All Places</button>
+        <button class="filter-btn" onclick="filterSelection('cafe')">☕ Cafes</button>
+        <button class="filter-btn" onclick="filterSelection('restaurant')">🍴 Restaurants</button>
+        <button class="filter-btn" onclick="filterSelection('mall')">🛍️ Malls</button>
+        <button class="filter-btn" onclick="filterSelection('hotel')">🏨 Hotels</button>
+    </div>
+    <div class="container" id="placesGrid">
+        <a href="https://www.google.com/maps/search/Rx+Daily+Dose+Café+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/dailydose.PNG" alt="Rx Daily Dose Café">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Rx Daily Dose Café</h3>
+                <p>Popular cafe on Gensan Drive</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Coffee+Project+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/coffeeproject.PNG" alt="Coffee Project">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Coffee Project</h3>
+                <p>Well-reviewed coffee shop</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Unfnshd+cafe+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/unfnshdcafe.PNG" alt="Unfnshd cafe">
+            <div class="card-content">
+
+                <span class="category-tag">Cafe</span>
+                <h3>Unfnshd cafe</h3>
+                <p>Cozy café on General Paulino Santos Dr</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/The+Brew+Project+PH+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/thebrewproject.PNG" alt="The Brew Project PH">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>The Brew Project PH</h3>
+                <p>Judge Alba St coffee spot</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Kapoy+Coffee+Shop+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/kapoy.PNG" alt="Kapoy Coffee Shop">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Kapoy Coffee Shop</h3>
+                <p>Local coffee shop</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/TEN+TWO+COFFEE+AND+MORE+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/tentwo.PNG" alt="TEN TWO COFFEE AND MORE">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>TEN TWO COFFEE AND MORE</h3>
+                <p>Café on Benigno Aquino Street</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Kalipay+Café+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/kalipay.PNG" alt="Kalipay Café">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Kalipay Café</h3>
+                <p>Small & affordable coffee shop</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Kian's+Brew+Café+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/kiansbrew.PNG" alt="Kian's Brew Café">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Kian's Brew Café</h3>
+                <p>Café on Apolinario Mabini St</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Taverne+Cafe+%26+Bar+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/taverne.PNG" alt="Taverne Cafe & Bar">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Taverne Cafe & Bar</h3>
+                <p>Café & bar spot</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Cafe+Abuela+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/abuela.PNG" alt="Cafe Abuela">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Cafe Abuela</h3>
+                <p>Upper Balmores Street café</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Breads+%26+Blends+Koronadal" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/breads.PNG" alt="Breads & Blends">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Breads & Blends</h3>
+                <p>Cafe + bakery popular with locals</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/Kahumayan+Cafe/@6.5319216,124.8661543,17z/data=!3m1!4b1!4m6!3m5!1s0x32f823004c730571:0x90e3ad0f342aedbb!8m2!3d6.5319163!4d124.8687346!16s%2Fg%2F11w2jxgl9y?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/kahumayan.PNG" alt="Kahumayan Cafe">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Kahumayan Cafe</h3>
+                <p>Cafe that lets you chill</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Guyo+Cafe+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/guyo.PNG" alt="Guyo Cafe">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Guyo Cafe</h3>
+                <p>Highly rated café on Jose Abad Santos St</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/EL+VICI+CAFE+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/elvici.PNG" alt="EL VICI CAFE">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>EL VICI CAFE</h3>
+                <p>Cafe on Rafael Alunan Ave</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Cà+Phê+Ngon+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/caphengon.PNG" alt="CA PHE NGON">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Cà Phê Ngon</h3>
+                <p>Vietnamese-style coffee shop in Pantua Village</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/0428+Café+Koronadal" target="_blank" class="card-link card cafe">
+            <img src="assets/0428cafe.PNG" alt="0428 Café">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>0428 Café</h3>
+                <p>Café along Koronadal-Tampakan Rd</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/J.CO+Donuts+Coffee+KCC+Mall+of+Marbel" target="_blank"
+            class="card-link card cafe">
+            <img src="assets/jco.PNG" alt="J.CO Donuts & Coffee (KCC Mall of Marbel)">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>J.CO Donuts & Coffee (KCC Mall of Marbel)</h3>
+                <p>Coffee & donuts shop inside KCC Mall</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/Tahum+Cafe/@6.5400189,124.8722824,17z/data=!3m1!4b1!4m6!3m5!1s0x32f823f627263e1d:0x254f198488d459e3!8m2!3d6.5400136!4d124.8748627!16s%2Fg%2F11qg4312f1?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/tahum.PNG" alt="Tahum Cafe">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Tahum Cafe</h3>
+                <p>Coffee and snacks</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/SaBalai+Bistro+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/sabalai.PNG" alt="SaBalai Bistro">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>SaBalai Bistro</h3>
+                <p>Popular bistro with Filipino & international dishes.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Gryk's+Food+House+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/gryks.PNG" alt="Gryk's Food House">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Gryk's Food House</h3>
+                <p>Family-friendly restaurant.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Moonplate+Grill+and+Resto+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/moonplate.PNG" alt="Moonplate Grill and Resto">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Moonplate Grill and Resto</h3>
+                <p>Well-rated grill & resto.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Basilio's+Based-Basil+Pasta+and+Resto+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/basilios.PNG" alt="Basilio's Based‑Basil Pasta & Resto">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Basilio's Based‑Basil Pasta & Resto</h3>
+                <p>Pasta and Filipino dishes.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Ken's+Food+and+Catering+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/kensfood.PNG" alt="Ken's Food and Catering">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Ken's Food and Catering</h3>
+                <p>Local favorite for meals & catering.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Cinco+Niñas+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/cinco.PNG" alt="Cinco Niñas">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Cinco Niñas</h3>
+                <p>Casual dining on Gensan Drive.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/McCoy's+Rib+Joint+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/mccoys.PNG" alt="McCoy's Rib Joint">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>McCoy's Rib Joint</h3>
+                <p>Ribs and grill house.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Viajera+Dine+and+Cafe+Koronadal" target="_blank"
+            class="card-link card restaurant cafe">
+            <img src="assets/viajera.PNG" alt="Viajera Dine and Cafe">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Viajera Dine and Cafe</h3>
+                <p>Dine-in & casual café space.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Sheila's+Park+Family+Resto+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/sheilas.PNG" alt="Sheila's Park Family Resto">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Sheila's Park Family Resto</h3>
+                <p>Family restaurant.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Mimosa+Resto+Cafe+Koronadal" target="_blank"
+            class="card-link card restaurant cafe">
+            <img src="assets/mimosa.PNG" alt="Mimosa Resto Cafe">
+            <div class="card-content">
+                <span class="category-tag">Cafe & Restaurant</span>
+                <h3>Mimosa Resto Cafe</h3>
+                <p>Café-style dining.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/24+Chicken+Marbel+Koronadal/@6.4967469,124.8443429,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank" class="card-link card restaurant">
+            <img src="assets/24chicken.PNG" alt="24 Chicken Marbel">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>24 Chicken Marbel</h3>
+                <p>Fried chicken & quick bites.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/JOU+JOU+BBQ+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/jou.PNG" alt="JOU JOU BBQ & more">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>JOU JOU BBQ & more</h3>
+                <p>BBQ and street food style.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Gab's+Yard+Steak+House+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/gabsyard.PNG" alt="Gab's Yard Steak House and Grill">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Gab's Yard Steak House and Grill</h3>
+                <p>Steakhouse with grill menu.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Bab's+Resto+2+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/babs.PNG" alt="Bab's Resto 2">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Bab's Resto 2</h3>
+                <p>Family-run restaurant.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Rhamzas+Koronadal" target="_blank"
+            class="card-link card restaurant">
+            <img src="assets/rhamzas.PNG" alt="Rhamzas">
+            <div class="card-content">
+                <span class="category-tag">Restaurant</span>
+                <h3>Rhamzas</h3>
+                <p>Casual restaurant.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Habi+Hotel+Koronadal" target="_blank" class="card-link card hotel">
+            <img src="assets/habi.PNG" alt="Habi Hotel">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Habi Hotel</h3>
+                <p>Modern hotel along the National Highway offering comfortable rooms and events space.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Eighty+Eight+Hotel+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/eightyeight.PNG" alt="Eighty Eight Hotel">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Eighty Eight Hotel</h3>
+                <p>Popular hotel on Gensan Drive with strong ratings.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Mezza+Hotel+Koronadal" target="_blank" class="card-link card hotel">
+            <img src="assets/mezza.PNG" alt="Mezza Hotel">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Mezza Hotel</h3>
+                <p>Centrally located hotel on General Paulino Santos Drive.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Dreamweavers+Hotel+Koronadal" target="_blank"
+            class="card-link card hotel">
+
+            <img src="assets/dreamweavers.PNG" alt="Dreamweavers Hotel by RedDoorz">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Dreamweavers Hotel by RedDoorz</h3>
+                <p>National Highway hotel.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Toshiko+Boutique+Hotel+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/reddoorz.PNG" alt="RedDoorz Plus @ Toshiko Boutique Hotel Koronadal City">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>RedDoorz Plus @ Toshiko Boutique Hotel Koronadal City</h3>
+                <p>Boutique-style hotel.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Two+Seasons+Apartelle+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/twoseasons.PNG" alt="Two Seasons Apartelle">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Two Seasons Apartelle</h3>
+                <p>Budget apartelle lodging.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/One+Travelers+Place+Boutique+Hotel+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/onetravelers.PNG" alt="One Travelers Place Boutique Hotel">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>One Travelers Place Boutique Hotel</h3>
+                <p>Boutique hotel / guesthouse.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Aqua+Guesthouse+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/aqua.PNG" alt="Aqua Guesthouse">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Aqua Guesthouse</h3>
+                <p>Guesthouse style lodging.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Greenstate+Suites+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/green.PNG" alt="Greenstate Suites">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Greenstate Suites</h3>
+                <p>Suite-style lodging with good reviews.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Casitas+Verde+Hotel+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/casitas.PNG" alt="Casitas Verde Hotel">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Casitas Verde Hotel</h3>
+                <p>Well-rated hotel on Gensan Drive.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Jkenter+Suites+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/jkenter.PNG" alt="Jkenter Suites">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Jkenter Suites</h3>
+                <p>Boutique suites with strong ratings.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Hotel+De+Sofia+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/sofia.PNG" alt="Hotel De Sofia">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Hotel De Sofia</h3>
+                <p>Comfortable hotel near city center.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/CrownCity+Suites+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/crown.PNG" alt="CrownCity Suites">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>CrownCity Suites</h3>
+                <p>Suites/apartment-style accommodation.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Aquila+D'+Oro+Bed+and+Breakfast+Koronadal" target="_blank"
+            class="card-link card hotel">
+            <img src="assets/aquila.PNG" alt="Aquila D' Oro Bed and Breakfast">
+            <div class="card-content">
+                <span class="category-tag">Hotel</span>
+                <h3>Aquila D' Oro Bed and Breakfast</h3>
+                <p>B&B style accommodation on Balmores Street.</p>
+            </div>
+        </a>
+
+        <a href="https://www.google.com/maps/search/KCC+Mall+of+Marbel" target="_blank" class="card-link card mall">
+            <img src="assets/kcc.PNG" alt="KCC Mall of Marbel">
+            <div class="card-content">
+                <span class="category-tag">Mall</span>
+                <h3>KCC Mall of Marbel</h3>
+                <p>One of the largest and most popular malls in Koronadal City, with shopping, dining, entertainment,
+                    and services.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Gaisano+Grand+Mall+Koronadal" target="_blank"
+            class="card-link card mall">
+            <img src="assets/gaisano.PNG" alt="Gaisano Grand Mall Koronadal">
+            <div class="card-content">
+                <span class="category-tag">Mall</span>
+                <h3>Gaisano Grand Mall Koronadal</h3>
+                <p>Large shopping mall with shops, dining, groceries, and services.</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/search/Mall+of+Ace+Centerpoint+Koronadal" target="_blank"
+            class="card-link card mall">
+            <img src="assets/ace.PNG" alt="Mall of Ace Centerpoint">
+            <div class="card-content">
+                <span class="category-tag">Mall</span>
+                <h3>Mall of Ace Centerpoint</h3>
+                <p>Community mall with retail, food stalls, and convenience shops.</p>
+            </div>
+        </a>
+        <footer>
+            <p>© 2026 Discover Koronadal Guide | A Marbelous Experience | Designed for the Crown City of the South</p>
+        </footer>
+
+        <script>
+            // Filter Functionality
+            function filterSelection(c) {
+                var x, i;
+                x = document.getElementsByClassName("card-link");
+                if (c == "all") c = "";
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                    if (x[i].className.indexOf(c) > -1) {
+                        x[i].style.display = "block";
+                    }
+                }
+
+                // Update active button state
+                var btns = document.getElementsByClassName("filter-btn");
+                for (var j = 0; j < btns.length; j++) {
+                    btns[j].classList.remove("active");
+                }
+                if (event) {
+                    event.currentTarget.classList.add("active");
+                }
+            }
+
+            // Search Functionality
+            function searchFunction() {
+                var input, filter, grid, cards, h3, i, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                grid = document.getElementById("placesGrid");
+                cards = grid.getElementsByClassName("card-link");
+
+                for (i = 0; i < cards.length; i++) {
+                    h3 = cards[i].getElementsByTagName("h3")[0];
+                    txtValue = h3.textContent || h3.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cards[i].style.display = "";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }
+            }
+        </script>
+
+</body>
+
+</html>
