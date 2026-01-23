@@ -62,7 +62,7 @@
             width: 100%;
             max-width: 450px;
             /* Added box-sizing to prevent padding from breaking width on small screens */
-            box-sizing: border-box; 
+            box-sizing: border-box;
             border-radius: 50px;
             border: none;
             outline: none;
@@ -197,7 +197,8 @@
             }
 
             .search-container {
-                padding: 0 10px; /* Add safety padding for the container on mobile */
+                padding: 0 10px;
+                /* Add safety padding for the container on mobile */
             }
 
             .filters {
@@ -237,13 +238,49 @@
         <button class="filter-btn" onclick="filterSelection('hotel')">🏨 Hotels</button>
     </div>
     <div class="container" id="placesGrid">
-        <a href="https://www.google.com/maps/search/Rx+Daily+Dose+Café+Koronadal" target="_blank"
-            class="card-link card cafe">
+        <a href="https://www.google.com/maps/place/Perch+%26+Pour/@6.4812713,124.8487679,17z/data=!3m1!4b1!4m6!3m5!1s0x32f81f006f917cdb:0xd44343b345337add!8m2!3d6.481266!4d124.8513428!16s%2Fg%2F11yj_c861g?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/perch.PNG" alt="Perch and pour">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>Perch and Pour</h3>
+                <p>Lowkey cafe in Koronadal City</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/All+Day+Cafe+by+Rovini/@6.4932116,124.832208,17z/data=!3m1!4b1!4m6!3m5!1s0x32f8190019a7dc1b:0x66d2febb1ec77ce7!8m2!3d6.4932063!4d124.8370789!16s%2Fg%2F11vsv0bfzy?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/alldaycafe.PNG" alt="All day cafe">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>All Day Cafe</h3>
+                <p>Cafe with a Pleasant ambience and good coffee</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/Merc's+Cafe/@6.4943467,124.8375306,19z/data=!3m1!4b1!4m6!3m5!1s0x32f81892f3f49d1b:0xedbc40bee6df11c9!8m2!3d6.4943467!4d124.8381757!16s%2Fg%2F11cjnp14jx?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/mercs.PNG" alt="mercs">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>MercsCafe</h3>
+                <p>Popular cafe on </p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/Rx+Daily+Dose+Caf%C3%A9/@6.4963513,124.8463399,17z/data=!4m6!3m5!1s0x32f819574c118579:0x2f4ded21196655d1!8m2!3d6.4963513!4d124.8489202!16s%2Fg%2F11q25n6x1g?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank" class="card-link card cafe">
             <img src="assets/dailydose.PNG" alt="Rx Daily Dose Café">
             <div class="card-content">
                 <span class="category-tag">Cafe</span>
                 <h3>Rx Daily Dose Café</h3>
                 <p>Popular cafe on Gensan Drive</p>
+            </div>
+        </a>
+        <a href="https://www.google.com/maps/place/KOHI/@7.8293594,123.1421502,8z/data=!4m10!1m2!2m1!1skohi!3m6!1s0x32f8190076c4c30d:0xcff7baa47b6b2b86!8m2!3d6.4938279!4d124.8368082!15sCgRrb2hpWgYiBGtvaGmSAQRjYWZlmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDJ0b2VXSXlWbUZUYTFGNlZraG9ZVll3U1hwWFZHeDNVMFZHYkV4WVl4QULgAQD6AQQIbhBB!16s%2Fg%2F11xf778m5l?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card cafe">
+            <img src="assets/kohi.PNG" alt="KOHI">
+            <div class="card-content">
+                <span class="category-tag">Cafe</span>
+                <h3>KOHI</h3>
+                <p>Popular cafe on Koronadal City</p>
             </div>
         </a>
         <a href="https://www.google.com/maps/search/Coffee+Project+Koronadal" target="_blank"
@@ -331,7 +368,7 @@
             <div class="card-content">
                 <span class="category-tag">Cafe</span>
                 <h3>Breads & Blends</h3>
-                <p>Cafe + bakery popular with locals</p>
+                <p>Cafe & bakery popular with locals and a very aesthetic place.</p>
             </div>
         </a>
         <a href="https://www.google.com/maps/place/Kahumayan+Cafe/@6.5319216,124.8661543,17z/data=!3m1!4b1!4m6!3m5!1s0x32f823004c730571:0x90e3ad0f342aedbb!8m2!3d6.5319163!4d124.8687346!16s%2Fg%2F11w2jxgl9y?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
@@ -340,7 +377,7 @@
             <div class="card-content">
                 <span class="category-tag">Cafe</span>
                 <h3>Kahumayan Cafe</h3>
-                <p>Cafe that lets you chill</p>
+                <p>Cafe that lets you chill, good for relaxation.</p>
             </div>
         </a>
         <a href="https://www.google.com/maps/search/Guyo+Cafe+Koronadal" target="_blank" class="card-link card cafe">
@@ -348,7 +385,7 @@
             <div class="card-content">
                 <span class="category-tag">Cafe</span>
                 <h3>Guyo Cafe</h3>
-                <p>Highly rated café on Jose Abad Santos St</p>
+                <p>Highly rated café on Jose Abad Santos St.</p>
             </div>
         </a>
         <a href="https://www.google.com/maps/search/EL+VICI+CAFE+Koronadal" target="_blank" class="card-link card cafe">
@@ -474,6 +511,15 @@
                 <p>Family restaurant.</p>
             </div>
         </a>
+        <a href="https://www.google.com/maps/place/BLOOM+BOX/@6.4960412,124.8349209,17z/data=!3m1!4b1!4m6!3m5!1s0x32f819003d975671:0x70b47604392a7d1e!8m2!3d6.4960359!4d124.8374958!16s%2Fg%2F11y2y96f61?entry=ttu&g_ep=EgoyMDI2MDEyMC4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card restaurant cafe">
+            <img src="assets/bloombox.PNG" alt="Bloom Box">
+            <div class="card-content">
+                <span class="category-tag">Cafe & Restaurant</span>
+                <h3>Bloom Box</h3>
+                <p></p>Cool vibe with great foods and drinks.</p>
+            </div>
+        </a>
         <a href="https://www.google.com/maps/search/Mimosa+Resto+Cafe+Koronadal" target="_blank"
             class="card-link card restaurant cafe">
             <img src="assets/mimosa.PNG" alt="Mimosa Resto Cafe">
@@ -528,8 +574,8 @@
                 <p>Casual restaurant.</p>
             </div>
         </a>
-                <a href="https://www.google.com/maps/place/Shinjuku+Golden+Kai/@6.4889023,124.8397222,17z/data=!3m1!4b1!4m6!3m5!1s0x32f819e4f799b943:0x623bd04dbe0c707!8m2!3d6.488897!4d124.8422971!16s%2Fg%2F11yprbhkjz?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D" target="_blank"
-            class="card-link card restaurant">
+        <a href="https://www.google.com/maps/place/Shinjuku+Golden+Kai/@6.4889023,124.8397222,17z/data=!3m1!4b1!4m6!3m5!1s0x32f819e4f799b943:0x623bd04dbe0c707!8m2!3d6.488897!4d124.8422971!16s%2Fg%2F11yprbhkjz?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"
+            target="_blank" class="card-link card restaurant">
             <img src="assets/shinjuku.PNG" alt="Shinjuku Golden Kai">
             <div class="card-content">
                 <span class="category-tag">Restaurant</span>
