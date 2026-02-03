@@ -8,7 +8,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600&display=swap">
   <link rel="stylesheet" href="css/stylesheet.css">
-
+  <link rel="stylesheet" href="css/toggle.css"> <!-- separate CSS file for the switch -->
 </head>
 
 <body>
@@ -19,7 +19,13 @@
       <a href="#skills">Skills</a>
       <a href="#projects">Work</a>
       <a href="#contact">Contact</a>
-      <button id="theme-toggle">DARK MODE</button>
+
+      <!-- Custom Theme Toggle Switch -->
+      <label class="switch">
+        <input type="checkbox" class="toggle" id="checkbox">
+        <span class="slider"></span>
+        <span class="card-side"></span>
+      </label>
     </div>
   </nav>
 
@@ -121,7 +127,7 @@
           </div>
         </a>
       </div>
-            <div class="project-card">
+      <div class="project-card">
         <a href="sampleDesign/koronadal.html" target="_blank">
           <img src="assets/explorekoronadal.PNG" alt="Koronadal City Guide">
           <div class="project-info">
@@ -144,25 +150,26 @@
   </footer>
 
   <script>
-    const toggleBtn = document.getElementById('theme-toggle');
+    const checkbox = document.getElementById('checkbox');
     const root = document.documentElement;
 
     // Check for saved user preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       root.setAttribute('data-theme', 'dark');
-      toggleBtn.innerText = "LIGHT MODE";
+      checkbox.checked = true;
+    } else {
+      root.removeAttribute('data-theme');
+      checkbox.checked = false;
     }
 
-    toggleBtn.addEventListener('click', () => {
-      if (root.getAttribute('data-theme') === 'dark') {
-        root.removeAttribute('data-theme');
-        toggleBtn.innerText = "DARK MODE";
-        localStorage.setItem('theme', 'light');
-      } else {
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
         root.setAttribute('data-theme', 'dark');
-        toggleBtn.innerText = "LIGHT MODE";
         localStorage.setItem('theme', 'dark');
+      } else {
+        root.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
       }
     });
   </script>

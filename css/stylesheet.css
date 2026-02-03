@@ -1,14 +1,14 @@
     :root {
       /* LIGHT MODE */
-      --bg-color: #f8fafc;
-      --bg-gradient: radial-gradient(circle at top, #ffffff, #e2e8f0);
+      --bg-color: #e6e6e6;
+      --bg-gradient: radial-gradient(circle at top, #e6e6e6, #ceddf0);
       --text-main: #040b1a;
-      --text-sub: #475569;
+      --text-sub: #29374b;
       --accent: #0ea5e9;
-      --nav-bg: rgba(255, 255, 255, 0.8);
+      --nav-bg: rgba(214, 214, 214, 0.8);
       --card-bg: rgba(255, 255, 255, 0.9);
       --border: rgba(14, 165, 233, 0.2);
-      --grid-opacity: 0.05;
+      --grid-opacity: 1;
       --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
