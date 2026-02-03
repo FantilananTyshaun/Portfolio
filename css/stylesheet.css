@@ -2,7 +2,7 @@
       /* LIGHT MODE */
       --bg-color: #f8fafc;
       --bg-gradient: radial-gradient(circle at top, #ffffff, #e2e8f0);
-      --text-main: #0f172a;
+      --text-main: #040b1a;
       --text-sub: #475569;
       --accent: #0ea5e9;
       --nav-bg: rgba(255, 255, 255, 0.8);
@@ -55,9 +55,9 @@
         linear-gradient(rgba(14, 165, 233, var(--grid-opacity)) 1px, transparent 1px),
         linear-gradient(90deg, rgba(14, 165, 233, var(--grid-opacity)) 1px, transparent 1px);
       background-size: 60px 60px;
-      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
       z-index: -1;
-      animation: moveGrid 20s linear infinite;
+      animation: moveGrid 5s linear infinite;
     }
 
     @keyframes moveGrid {

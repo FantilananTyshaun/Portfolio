@@ -122,13 +122,13 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
-        canvas.width = 450;
+        canvas.width = 400;
         canvas.height = window.innerHeight;
 
         let gameActive = true;
         let score = 0;
         let distance = 0;
-        let baseSpeed = 5;
+        let baseSpeed = 10;
         let difficultyLevel = 1;
         let spawnRate = 1500; // ms between spawns
         let lastSpawn = 0;
@@ -141,8 +141,8 @@
         window.addEventListener('keyup', e => keys[e.code] = false);
 
         function updateDifficulty() {
-            // Level up every 500 score
-            let newLevel = Math.floor(score / 500) + 1;
+            // Level up every 50 score
+            let newLevel = Math.floor(score / 50) + 1;
             if (newLevel !== difficultyLevel) {
                 difficultyLevel = newLevel;
                 document.getElementById('level-tag').innerText = `LEVEL ${difficultyLevel}`;
@@ -196,7 +196,7 @@
                 // Off-screen
                 if (en.y > canvas.height) {
                     enemies.splice(i, 1);
-                    score += 50;
+                    score += 10;
                 }
             });
 
