@@ -8,7 +8,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600&display=swap">
   <link rel="stylesheet" href="css/stylesheet.css">
-  <link rel="stylesheet" href="css/toggle.css"> <!-- separate CSS file for the switch -->
+  <link rel="stylesheet" href="css/toggle.css">
 </head>
 
 <body>
@@ -20,7 +20,6 @@
       <a href="#projects">Work</a>
       <a href="#contact">Contact</a>
 
-      <!-- Custom Theme Toggle Switch -->
       <label class="switch">
         <input type="checkbox" class="toggle" id="checkbox">
         <span class="slider"></span>
@@ -153,7 +152,6 @@
     const checkbox = document.getElementById('checkbox');
     const root = document.documentElement;
 
-    // Check for saved user preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       root.setAttribute('data-theme', 'dark');
