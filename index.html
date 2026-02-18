@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tyshaun Fantilanan - UI Designer / Front-end Developer</title>
+  <title>Tyshaun Fantilanan - UI Designer</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600&display=swap">
   <link rel="stylesheet" href="css/stylesheet.css">
@@ -59,7 +59,7 @@
 
   <section id="projects">
     <h2 class="section-title">Sample Work</h2>
-    <div class="projects-grid">
+    <div class="projects-grid" id="projectGrid">
       <div class="project-card">
         <a href="sampleDesign/futuristiceui.html" target="_blank">
           <img src="assets/futuristic_design1.PNG" alt="Futuristic Clock UI">
@@ -141,12 +141,24 @@
           </div>
         </a>
       </div>
+    </div> 
+
+    <div class="project-thumbnails">
+      <a href="sampleDesign/futuristiceui.html" target="_blank"><img src="assets/futuristic_design1.PNG" alt="Thumbnail 1"></a>
+      <a href="sampleDesign/coffee.html" target="_blank"><img src="assets/coffeeshop.PNG" alt="Thumbnail 2"></a>
+      <a href="sampleDesign/shoe.html" target="_blank"><img src="assets/shoeweb.PNG" alt="Thumbnail 3"></a>
+      <a href="sampleDesign/lto.html" target="_blank"><img src="assets/ltowebdesign.PNG" alt="Thumbnail 4"></a>
+      <a href="sampleDesign/restaurant1.html" target="_blank"><img src="assets/resto1.PNG" alt="Thumbnail 5"></a>
+      <a href="sampleDesign/pamana.html" target="_blank"><img src="assets/pamana.PNG" alt="Thumbnail 6"></a>
+      <a href="sampleDesign/hotel.html" target="_blank"><img src="assets/hotel.PNG" alt="Thumbnail 7"></a>
+      <a href="sampleDesign/car.html" target="_blank"><img src="assets/car.PNG" alt="Thumbnail 8"></a>
+      <a href="sampleDesign/koronadal.html" target="_blank"><img src="assets/explorekoronadal.PNG" alt="Thumbnail 9"></a>
     </div>
   </section>
 
   <section id="contact">
     <h2 class="section-title">Get In Touch</h2>
-    <p>Ready to build something amazing? Contact me.</p><br>
+
     <p>Email: <a href="mailto:shaunrull6@gmail.com">shaunrull6@gmail.com</a></p>
     <p>Instagram: <a href="https://www.instagram.com/_tshn.rf/" target="_blank">@_tshn.rf</a></p>
   </section>
@@ -158,14 +170,14 @@
   <script>
     const checkbox = document.getElementById('checkbox');
     const root = document.documentElement;
+    const projectGrid = document.getElementById('projectGrid');
 
+    // --- Theme Management ---
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       root.setAttribute('data-theme', 'dark');
       checkbox.checked = true;
-    } else {
-      root.removeAttribute('data-theme');
-      checkbox.checked = false;
+
     }
 
     checkbox.addEventListener('change', () => {
@@ -177,6 +189,33 @@
         localStorage.setItem('theme', 'light');
       }
     });
+
+    // --- Infinite Seamless Loop Logic ---
+    // Clone cards to create a seamless loop
+    const cards = Array.from(projectGrid.children);
+    cards.forEach(card => {
+      const clone = card.cloneNode(true);
+      projectGrid.appendChild(clone);
+    });
+
+    let scrollPos = 0;
+    const scrollWidth = projectGrid.scrollWidth / 2; // Real width before clones
+
+    function smoothScroll() {
+      if (projectGrid) {
+        scrollPos += 0.8; 
+        
+        // Reset to 0 when we reach the start of the cloned set
+        if (scrollPos >= scrollWidth) {
+          scrollPos = 0;
+        }
+        
+        projectGrid.scrollLeft = scrollPos;
+      }
+      requestAnimationFrame(smoothScroll);
+    }
+
+    requestAnimationFrame(smoothScroll);
   </script>
 </body>
 
