@@ -29,7 +29,7 @@
   </nav>
 
   <header>
-    <h1>Design and build Future with me.</h1>
+    <h1>Design and build Future with me!</h1>
   </header>
 
   <section id="about">
@@ -50,6 +50,8 @@
       <div class="skill-card">Figma</div>
       <div class="skill-card">UI Design</div>
       <div class="skill-card">UX Strategy</div>
+      <div class="skill-card">System Design</div>
+      <div class="skill-card">Web Design</div>
       <div class="skill-card">Prototyping</div>
       <div class="skill-card">Wireframing</div>
       <div class="skill-card">Canva</div>
@@ -177,7 +179,6 @@
     if (savedTheme === 'dark') {
       root.setAttribute('data-theme', 'dark');
       checkbox.checked = true;
-
     }
 
     checkbox.addEventListener('change', () => {
@@ -191,7 +192,7 @@
     });
 
     // --- Infinite Seamless Loop Logic ---
-    // Clone cards to create a seamless loop
+    
     const cards = Array.from(projectGrid.children);
     cards.forEach(card => {
       const clone = card.cloneNode(true);
@@ -205,7 +206,7 @@
       if (projectGrid) {
         scrollPos += 0.8; 
         
-        // Reset to 0 when we reach the start of the cloned set
+
         if (scrollPos >= scrollWidth) {
           scrollPos = 0;
         }
