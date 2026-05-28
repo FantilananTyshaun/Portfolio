@@ -1,95 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NeonStep | Interactive Footwear</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
     /* Floating Animation */
     @keyframes float {
-        0% { transform: translateY(0px) rotate(-10deg); }
-        50% { transform: translateY(-20px) rotate(-12deg); }
-        100% { transform: translateY(0px) rotate(-10deg); }
+        0% {
+            transform: translateY(0px) rotate(-10deg);
+        }
+        50% {
+            transform: translateY(-20px) rotate(-12deg);
+        }
+        100% {
+            transform: translateY(0px) rotate(-10deg);
+        }
     }
+
     .shoe-float {
         animation: float 4s ease-in-out infinite;
         filter: drop-shadow(0 25px 25px rgba(0,0,0,0.5));
     }
 
-    /* Smooth color transition for glow */
-    #bg-glow { transition: background-color 0.3s ease; }
+    /* Smooth glow transition */
+    #bg-glow {
+        transition: background-color 0.3s ease;
+    }
 </style>
 </head>
+
 <body class="bg-zinc-900 text-white font-sans overflow-hidden">
 
+<!-- Navbar -->
 <nav class="flex justify-between p-8 items-center">
-    <h1 class="text-2xl font-black italic tracking-tighter">NEONSTEP</h1>
+    <h1 class="text-2xl font-black italic tracking-tighter">
+        NEONSTEP
+    </h1>
+
     <div class="hidden md:flex space-x-8 uppercase text-xs tracking-widest font-bold">
         <a href="#" class="text-blue-400">Collections</a>
         <a href="#" class="hover:text-blue-400 transition">Custom ID</a>
         <a href="#" class="hover:text-blue-400 transition">Sustainability</a>
     </div>
-    <button class="border border-zinc-700 px-5 py-2 text-xs uppercase font-bold hover:bg-white hover:text-black transition">Cart (0)</button>
+
+    <button class="border border-zinc-700 px-5 py-2 text-xs uppercase font-bold hover:bg-white hover:text-black transition">
+        Cart (0)
+    </button>
 </nav>
 
+<!-- Main -->
 <main class="container mx-auto px-6 flex flex-col md:flex-row items-center min-h-[85vh]">
 
+    <!-- Left Content -->
     <div class="md:w-1/2 space-y-6 z-20">
+
         <div class="inline-block bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-xs font-bold tracking-widest">
             2026 PERFORMANCE SERIES
         </div>
+
         <h2 class="text-7xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter">
-            Aero <br> <span class="text-transparent stroke-zinc-100" style="-webkit-text-stroke: 1px white;">Glide X</span>
+            Aero <br>
+            <span
+                class="text-transparent"
+                style="-webkit-text-stroke: 1px white;"
+            >
+                Glide X
+            </span>
         </h2>
+
         <p class="text-zinc-400 max-w-sm leading-relaxed">
             Experience weightless movement. The Aero Glide X features our new transparent mesh and reactive carbon plating.
         </p>
+
         <div class="flex items-center space-x-6 pt-4">
             <button class="bg-blue-600 text-white px-10 py-4 font-black hover:bg-blue-500 hover:scale-105 transition-all uppercase italic">
                 Buy Now
             </button>
-            <span class="text-2xl font-light text-zinc-500">$180.00</span>
+
+            <span class="text-2xl font-light text-zinc-500">
+                $180.00
+            </span>
         </div>
     </div>
 
+    <!-- Right Content -->
     <div class="md:w-1/2 relative flex justify-center items-center mt-20 md:mt-0">
-        <div id="bg-glow" class="absolute w-[300px] h-[300px] bg-blue-600 rounded-full blur-[150px] opacity-40"></div>
-        <h1 class="absolute text-[15rem] font-black text-white/[0.03] select-none tracking-tighter italic">AIR</h1>
 
-        <img id="shoe-display" 
-             src="./assets/shoe1.PNG" 
-             alt="Running Shoe" 
-             class="w-[120%] z-10 shoe-float pointer-events-none">
+        <!-- Glow -->
+        <div
+            id="bg-glow"
+            class="absolute w-[300px] h-[300px] bg-blue-600 rounded-full blur-[150px] opacity-40"
+        ></div>
 
+        <!-- Background Text -->
+        <h1 class="absolute text-[15rem] font-black text-white/[0.03] select-none tracking-tighter italic">
+            AIR
+        </h1>
+
+        <!-- Shoe Image -->
+        <img
+            id="shoe-display"
+            src="./assets/shoe1.png"
+            alt="Running Shoe"
+            class="w-[120%] z-10 shoe-float pointer-events-none"
+        />
+
+        <!-- Color Switcher -->
         <div class="absolute bottom-[-60px] md:bottom-10 right-10 flex flex-col space-y-4 z-30">
-            <p class="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-2"></p>
+
+            <p class="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-2">
+            </p>
+
             <div class="flex space-x-4">
-                <button onclick="changeColor('blue')" class="w-6 h-6 bg-blue-600 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-blue-600 transition-all"></button>
-                <button onclick="changeColor('orange')" class="w-6 h-6 bg-orange-500 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-orange-500 transition-all"></button>
-                <button onclick="changeColor('green')" class="w-6 h-6 bg-emerald-500 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-emerald-500 transition-all"></button>
+
+                <button
+                    onclick="changeColor('blue')"
+                    class="w-6 h-6 bg-blue-600 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-blue-600 transition-all"
+                ></button>
+
+                <button
+                    onclick="changeColor('orange')"
+                    class="w-6 h-6 bg-orange-500 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-orange-500 transition-all"
+                ></button>
+
+                <button
+                    onclick="changeColor('green')"
+                    class="w-6 h-6 bg-emerald-500 rounded-full ring-offset-4 ring-offset-zinc-900 focus:ring-2 ring-emerald-500 transition-all"
+                ></button>
+
             </div>
         </div>
     </div>
 </main>
 
 <script>
-function changeColor(color) {
-    const shoe = document.getElementById('shoe-display');
-    const glow = document.getElementById('bg-glow');
+    const shoes = {
+        blue: {
+            image: './assets/shoe1.png',
+            glow: '#2563eb'
+        },
 
-    // Instantly update shoe image and glow color
-    if(color === 'blue') {
-        shoe.src = 'assets/shoe1.PNG';
-        glow.style.backgroundColor = '#2563eb';
-    } else if(color === 'orange') {
-        shoe.src = 'assets/shoe2.PNG';
-        glow.style.backgroundColor = '#f97316';
-    } else if(color === 'green') {
-        shoe.src = 'assets/shoe3.PNG';
-        glow.style.backgroundColor = '#10b981';
+        orange: {
+            image: './assets/shoe2.png',
+            glow: '#f97316'
+        },
+
+        green: {
+            image: './assets/shoe3.png',
+            glow: '#10b981'
+        }
+    };
+
+    function changeColor(color) {
+        const shoe = document.getElementById('shoe-display');
+        const glow = document.getElementById('bg-glow');
+
+        if (shoes[color]) {
+            shoe.src = shoes[color].image;
+            glow.style.backgroundColor = shoes[color].glow;
+        }
     }
-}
 </script>
 
 </body>
