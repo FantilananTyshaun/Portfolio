@@ -331,9 +331,9 @@
   <!-- ========================================================================
        HERO SECTION WITH INTERACTIVE 3D THREE.JS CANVAS
        ======================================================================== -->
-  <header class="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-4 sm:px-8 overflow-hidden">
+  <header class="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-4 sm:px-8 overflow-x-clip">
     <!-- Interactive 3D WebGL Canvas -->
-    <div id="hero-canvas-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"></div>
+    <div id="hero-canvas-container" class="absolute inset-x-0 -top-12 -bottom-24 z-0 cursor-grab active:cursor-grabbing pointer-events-auto"></div>
 
     <!-- Hero Foreground Content -->
     <div class="relative z-10 max-w-5xl mx-auto text-center pointer-events-none select-none">
@@ -394,10 +394,149 @@
             Tyshaun Fantilanan — UI Designer
           </h3>
           <p class="text-base sm:text-lg leading-relaxed opacity-85">
-           I am a UI Designer with a strong creative mindset and a passion for developing engaging, user-centered digital experiences. 
-           I leverage AI tools and emerging technologies to enhance website functionality, improve interactivity, and create intuitive user experiences. 
-           By combining clean, modern design with thoughtful functionality, I strive to transform creative ideas into meaningful digital solutions that are both visually appealing and practical.
+            I am a UI Designer with a strong creative mindset and a passion for developing engaging, user-centered digital experiences. I leverage AI tools and emerging technologies to enhance website functionality, improve interactivity, and create intuitive user experiences. By combining clean, modern design with thoughtful functionality, I strive to transform creative ideas into meaningful digital solutions that are both visually appealing and practical.
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       BUSINESS IMPACT & WHY HIRE ME MODULE (POST-ABOUT VALUE PROPOSITION)
+       ======================================================================== -->
+  <section id="value" class="relative z-10 py-16 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto reveal">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
+          <span class="text-xs font-display tracking-widest uppercase text-sky-400">02 // Business Impact</span>
+        </div>
+        <h2 class="section-title text-3xl sm:text-4xl font-extrabold">How I Help Your Business Grow</h2>
+      </div>
+      <p class="max-w-md text-sm sm:text-base opacity-75">
+        Great design isn't just decoration—it is a growth engine that turns visitors into loyal customers.
+      </p>
+    </div>
+
+    <!-- 3 Core Pillars: What I Can Do, How You Grow, What I Bring -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+      <!-- Pillar 1: How I Make Your Business Grow -->
+      <div class="tilt-card glass-panel rounded-3xl p-7 sm:p-8 flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-sky-500/15 blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="tilt-inner relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400 mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          <span class="text-[11px] font-display uppercase tracking-widest text-sky-400">01 / Growth &amp; Conversions</span>
+          <h3 class="font-display font-bold text-xl mt-1.5 mb-3">Turn Visitors Into Customers</h3>
+          <p class="text-sm opacity-80 leading-relaxed mb-5">
+            I design friction-free user journeys and persuasive visual hierarchies that guide users naturally toward booking, buying, or contacting your business—boosting trust and conversion rates from the very first click.
+          </p>
+        </div>
+        <ul class="tilt-inner relative z-10 space-y-2.5 text-xs sm:text-sm opacity-90 pt-4 border-t border-slate-500/15">
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            <span>High-converting landing pages &amp; storefronts</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            <span>Lower bounce rates via intuitive navigation</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            <span>Mobile-first responsiveness for every device</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2: What I Can Do For You -->
+      <div class="tilt-card glass-panel rounded-3xl p-7 sm:p-8 flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-purple-500/15 blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="tilt-inner relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-purple-400 mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <span class="text-[11px] font-display uppercase tracking-widest text-purple-400">02 / End-to-End Execution</span>
+          <h3 class="font-display font-bold text-xl mt-1.5 mb-3">What I Can Do For You</h3>
+          <p class="text-sm opacity-80 leading-relaxed mb-5">
+            From early-stage wireframes to interactive Figma prototypes and production-ready web interfaces, I transform rough business ideas into polished digital products tailored to your audience.
+          </p>
+        </div>
+        <ul class="tilt-inner relative z-10 space-y-2.5 text-xs sm:text-sm opacity-90 pt-4 border-t border-slate-500/15">
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <span>Complete Website &amp; Web App UI/UX Redesigns</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <span>Interactive Prototypes &amp; Scalable Design Systems</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <span>AI-Enhanced Interactive Components &amp; Micro-UX</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3: What I Bring To The Table -->
+      <div class="tilt-card glass-panel rounded-3xl p-7 sm:p-8 flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-emerald-500/15 blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="tilt-inner relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <span class="text-[11px] font-display uppercase tracking-widest text-emerald-400">03 / Competitive Edge</span>
+          <h3 class="font-display font-bold text-xl mt-1.5 mb-3">What I Bring To Your Team</h3>
+          <p class="text-sm opacity-80 leading-relaxed mb-5">
+            You get a modern designer who pairs creative visual storytelling with smart AI workflows—delivering standout, memorable brand experiences faster without sacrificing craft or usability.
+          </p>
+        </div>
+        <ul class="tilt-inner relative z-10 space-y-2.5 text-xs sm:text-sm opacity-90 pt-4 border-t border-slate-500/15">
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>AI-Accelerated Speed &amp; Modern Innovation</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Developer-Friendly Structure &amp; Clear Handoffs</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Distinctive Aesthetics That Beat Generic Templates</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Why Hire Me Banner + Direct CTA -->
+    <div class="glass-panel rounded-3xl p-7 sm:p-10 relative overflow-hidden border-sky-400/30">
+      <div class="absolute inset-0 bg-gradient-to-r from-sky-500/10 via-purple-500/10 to-transparent pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-400 text-[11px] font-display uppercase tracking-widest mb-3">
+            Why Work With Me
+          </div>
+          <h3 class="font-display font-bold text-2xl sm:text-3xl mb-3">
+            Ready to elevate your brand and stand out online?
+          </h3>
+          <p class="text-sm sm:text-base opacity-80 leading-relaxed">
+            Whether you're launching a new product, modernizing an outdated website, or building an interactive platform, I bring dedication, clear communication, and future-ready UI design that helps your business win trust and grow.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
+          <a href="#contact" class="px-7 py-3.5 rounded-2xl font-display font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white bg-gradient-to-r from-sky-500 to-purple-600 hover:from-sky-400 hover:to-purple-500 shadow-[0_10px_25px_-5px_rgba(56,189,248,0.45)] transform hover:-translate-y-0.5 transition-all">
+            Start a Project With Me
+          </a>
+          <a href="#projects" class="px-7 py-3 rounded-2xl font-display font-bold text-xs tracking-wider uppercase text-center glass-panel hover:border-sky-400 transition-all">
+            See Proven Results
+          </a>
         </div>
       </div>
     </div>
@@ -409,7 +548,7 @@
   <section id="skills" class="relative z-10 py-16 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto reveal">
     <div class="flex items-center gap-3 mb-4">
       <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
-      <span class="text-xs font-display tracking-widest uppercase text-sky-400">02 // Capabilities</span>
+      <span class="text-xs font-display tracking-widest uppercase text-sky-400">03 // Capabilities</span>
     </div>
     <h2 class="section-title text-3xl sm:text-4xl font-extrabold mb-10">Skills</h2>
 
@@ -427,20 +566,7 @@
         </div>
       </div>
 
-      <!-- Skill 2: UI / UX Design -->
-      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
-        <div class="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-          </svg>
-        </div>
-        <div class="tilt-inner">
-          <h3 class="font-display font-bold text-base">UI / UX Design</h3>
-          <p class="text-xs opacity-65 mt-0.5">User-Centered Flows</p>
-        </div>
-      </div>
-
-      <!-- Skill 3: System Design -->
+      <!-- Skill 3: System Development -->
       <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
         <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -448,8 +574,21 @@
           </svg>
         </div>
         <div class="tilt-inner">
-          <h3 class="font-display font-bold text-base">System Design</h3>
+          <h3 class="font-display font-bold text-base">System Development</h3>
           <p class="text-xs opacity-65 mt-0.5">Scalable Architecture</p>
+        </div>
+      </div>
+      
+      <!-- Skill: UI/UX Design -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-pink-500/15 border border-pink-400/30 flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 73.5l4-4" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">UI/UX Design</h3>
+          <p class="text-xs opacity-65 mt-0.5">User Journeys &amp; Strategy</p>
         </div>
       </div>
 
@@ -466,7 +605,20 @@
         </div>
       </div>
 
-      <!-- Skill 5: Prototyping -->
+      <!-- Skill 5: Web Development -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Web Development</h3>
+          <p class="text-xs opacity-65 mt-0.5">Interactive Front-End Builds</p>
+        </div>
+      </div>
+
+      <!-- Skill 6: Prototyping -->
       <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
         <div class="w-12 h-12 rounded-xl bg-fuchsia-500/15 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -479,7 +631,7 @@
         </div>
       </div>
 
-      <!-- Skill 6: Wireframing -->
+      <!-- Skill 7: Wireframing -->
       <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
         <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -492,8 +644,8 @@
         </div>
       </div>
 
-      <!-- Skill 7: Canva -->
-      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default sm:col-span-2 lg:col-span-2">
+      <!-- Skill 8: Canva -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
         <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
@@ -515,7 +667,7 @@
       <div>
         <div class="flex items-center gap-3 mb-4">
           <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
-          <span class="text-xs font-display tracking-widest uppercase text-sky-400">03 // Portfolio Showcase</span>
+          <span class="text-xs font-display tracking-widest uppercase text-sky-400">04 // Portfolio Showcase</span>
         </div>
         <h2 class="section-title text-3xl sm:text-4xl font-extrabold">Sample Work</h2>
       </div>
@@ -759,7 +911,7 @@
   <section id="contact" class="relative z-10 py-20 px-4 sm:px-8 max-w-4xl mx-auto text-center reveal">
     <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden">
       <div class="inline-block px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-display uppercase tracking-widest mb-4">
-        04 // Connect
+        05 // Connect
       </div>
       <h2 class="section-title text-3xl sm:text-4xl font-extrabold mb-4">Get In Touch</h2>
       <p class="opacity-75 max-w-lg mx-auto mb-8 text-sm sm:text-base">
@@ -1087,7 +1239,16 @@
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
-      camera.position.z = 6.5;
+
+      function updateCameraFraming() {
+        const aspect = container.clientWidth / container.clientHeight;
+        camera.aspect = aspect;
+        // Pull camera slightly back on mobile while letting the enlarged 3D core dominate the hero
+        const baseZ = aspect < 1 ? 9.4 : 7.8;
+        camera.position.z = baseZ;
+        camera.updateProjectionMatrix();
+      }
+      updateCameraFraming();
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(container.clientWidth, container.clientHeight);
@@ -1096,116 +1257,119 @@
 
       // Group holding all interactive 3D elements
       const coreGroup = new THREE.Group();
+      coreGroup.position.y = 0.25;
       scene.add(coreGroup);
 
-      // Primary Sculptural TorusKnot (Glassmorphic + Wireframe Dual Layer)
-      const knotGeo = new THREE.TorusKnotGeometry(1.75, 0.52, 160, 28, 2, 3);
-      const innerMat = new THREE.MeshPhysicalMaterial({
-        color: 0x0ea5e9,
-        emissive: 0x1e1b4b,
-        roughness: 0.2,
-        metalness: 0.75,
+      // Primary Sculptural TorusKnot (Enlarged Glassmorphic + Wireframe Dual Layer)
+      const knotGeo = new THREE.TorusKnotGeometry(2.05, 0.50, 175, 23);
+      const knotMat = new THREE.MeshPhysicalMaterial({
+        color: 0x38bdf8,
+        metalness: 0.2,
+        roughness: 0.15,
         transparent: true,
-        opacity: 0.55
+        opacity: 0.34,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
       });
-      const knotMesh = new THREE.Mesh(knotGeo, innerMat);
+      const knotMesh = new THREE.Mesh(knotGeo, knotMat);
       coreGroup.add(knotMesh);
 
-      // Outer Neon Wireframe Mesh
+      // Neon Wireframe Overlay
       const wireMat = new THREE.MeshBasicMaterial({
         color: 0x38bdf8,
         wireframe: true,
         transparent: true,
-        opacity: 0.35
+        opacity: 0.3
       });
       const wireMesh = new THREE.Mesh(knotGeo, wireMat);
-      wireMesh.scale.set(1.03, 1.03, 1.03);
+      wireMesh.scale.set(1.015, 1.015, 1.015);
       coreGroup.add(wireMesh);
 
-      // Orbital Tech Ring
-      const ringGeo = new THREE.TorusGeometry(3.1, 0.018, 16, 120);
-      const ringMat = new THREE.MeshBasicMaterial({
+      // Outer Orbital Rings (Proportional to larger core)
+      const ringGeo1 = new THREE.TorusGeometry(3.45, 0.03, 16, 140);
+      const ringMat1 = new THREE.MeshBasicMaterial({
         color: 0xa855f7,
         transparent: true,
-        opacity: 0.65
+        opacity: 0.55
       });
-      const orbitalRing = new THREE.Mesh(ringGeo, ringMat);
+      const orbitalRing = new THREE.Mesh(ringGeo1, ringMat1);
       orbitalRing.rotation.x = Math.PI / 2.6;
       orbitalRing.rotation.y = Math.PI / 6;
       coreGroup.add(orbitalRing);
 
-      // Second Counter-Rotating Ring
-      const ring2Geo = new THREE.TorusGeometry(3.55, 0.012, 16, 120);
-      const ring2Mat = new THREE.MeshBasicMaterial({
+      const ringGeo2 = new THREE.TorusGeometry(3.9, 0.018, 16, 140);
+      const ringMat2 = new THREE.MeshBasicMaterial({
         color: 0x38bdf8,
         transparent: true,
-        opacity: 0.45
+        opacity: 0.35
       });
-      const orbitalRing2 = new THREE.Mesh(ring2Geo, ring2Mat);
+      const orbitalRing2 = new THREE.Mesh(ringGeo2, ringMat2);
       orbitalRing2.rotation.x = -Math.PI / 3;
       orbitalRing2.rotation.y = -Math.PI / 5;
       coreGroup.add(orbitalRing2);
 
-      // Floating Cyber Particle Constellation
-      const particleCount = 420;
+      // Ambient Particle Constellation
+      const particleCount = 260;
       const particleGeo = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 16;
-        positions[i + 1] = (Math.random() - 0.5) * 12;
-        positions[i + 2] = (Math.random() - 0.5) * 12;
+        positions[i] = (Math.random() - 0.5) * 14;
+        positions[i + 1] = (Math.random() - 0.5) * 10;
+        positions[i + 2] = (Math.random() - 0.5) * 10;
       }
       particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       const particleMat = new THREE.PointsMaterial({
         color: 0x38bdf8,
         size: 0.045,
         transparent: true,
-        opacity: 0.75
+        opacity: 0.65
       });
       const particleField = new THREE.Points(particleGeo, particleMat);
       scene.add(particleField);
 
-      // Dynamic Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      // Lighting Setup
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
       scene.add(ambientLight);
 
-      const pointLight1 = new THREE.PointLight(0x38bdf8, 2.5, 20);
+      const pointLight1 = new THREE.PointLight(0x38bdf8, 2.2, 20);
       pointLight1.position.set(4, 4, 5);
       scene.add(pointLight1);
 
-      const pointLight2 = new THREE.PointLight(0xa855f7, 2.5, 20);
+      const pointLight2 = new THREE.PointLight(0xa855f7, 2.2, 20);
       pointLight2.position.set(-4, -3, 4);
       scene.add(pointLight2);
 
-      // Theme Sync Callback for 3D Materials
+      // Sync 3D Colors with Light / Dark Theme
       threeSceneThemeCallback = (isDark) => {
         if (isDark) {
-          innerMat.color.setHex(0x0ea5e9);
-          innerMat.emissive.setHex(0x1e1b4b);
+          knotMat.color.setHex(0x38bdf8);
           wireMat.color.setHex(0x38bdf8);
-          wireMat.opacity = 0.35;
+          wireMat.opacity = 0.28;
+          ringMat1.color.setHex(0xa855f7);
+          ringMat2.color.setHex(0x38bdf8);
           particleMat.color.setHex(0x38bdf8);
         } else {
-          innerMat.color.setHex(0x0284c7);
-          innerMat.emissive.setHex(0xc7d2fe);
-          wireMat.color.setHex(0x7c3aed);
-          wireMat.opacity = 0.28;
+          knotMat.color.setHex(0x0284c7);
+          wireMat.color.setHex(0x0284c7);
+          wireMat.opacity = 0.2;
+          ringMat1.color.setHex(0x7c3aed);
+          ringMat2.color.setHex(0x0284c7);
           particleMat.color.setHex(0x0284c7);
         }
       };
       threeSceneThemeCallback(checkbox.checked);
 
-      // Interactive Mouse & Drag Controls
+      // Interactive Mouse & Touch Camera / Core Rotation
       let targetRotX = 0;
       let targetRotY = 0;
       let isDragging = false;
-      let prevMouseX = 0;
-      let prevMouseY = 0;
+      let prevX = 0;
+      let prevY = 0;
 
       container.addEventListener('mousedown', (e) => {
         isDragging = true;
-        prevMouseX = e.clientX;
-        prevMouseY = e.clientY;
+        prevX = e.clientX;
+        prevY = e.clientY;
       });
 
       window.addEventListener('mouseup', () => {
@@ -1214,49 +1378,47 @@
 
       window.addEventListener('mousemove', (e) => {
         if (isDragging) {
-          const deltaX = e.clientX - prevMouseX;
-          const deltaY = e.clientY - prevMouseY;
-          targetRotY += deltaX * 0.008;
-          targetRotX += deltaY * 0.008;
-          prevMouseX = e.clientX;
-          prevMouseY = e.clientY;
+          const dx = e.clientX - prevX;
+          const dy = e.clientY - prevY;
+          targetRotY += dx * 0.008;
+          targetRotX += dy * 0.008;
+          prevX = e.clientX;
+          prevY = e.clientY;
         } else {
-          const normX = (e.clientX / window.innerWidth) * 2 - 1;
-          const normY = (e.clientY / window.innerHeight) * 2 - 1;
-          targetRotY = normX * 0.55;
-          targetRotX = normY * 0.45;
+          const nx = (e.clientX / window.innerWidth) * 2 - 1;
+          const ny = (e.clientY / window.innerHeight) * 2 - 1;
+          targetRotY = nx * 0.65;
+          targetRotX = ny * 0.45;
         }
       });
 
-      // Touch Drag Support for Mobile
       container.addEventListener('touchstart', (e) => {
         if (e.touches.length === 1) {
           isDragging = true;
-          prevMouseX = e.touches[0].clientX;
-          prevMouseY = e.touches[0].clientY;
+          prevX = e.touches[0].clientX;
+          prevY = e.touches[0].clientY;
         }
       }, { passive: true });
 
       container.addEventListener('touchmove', (e) => {
         if (isDragging && e.touches.length === 1) {
-          const deltaX = e.touches[0].clientX - prevMouseX;
-          const deltaY = e.touches[0].clientY - prevMouseY;
-          targetRotY += deltaX * 0.01;
-          targetRotX += deltaY * 0.01;
-          prevMouseX = e.touches[0].clientX;
-          prevMouseY = e.touches[0].clientY;
+          const dx = e.touches[0].clientX - prevX;
+          const dy = e.touches[0].clientY - prevY;
+          targetRotY += dx * 0.008;
+          targetRotX += dy * 0.008;
+          prevX = e.touches[0].clientX;
+          prevY = e.touches[0].clientY;
         }
       }, { passive: true });
 
       container.addEventListener('touchend', () => {
         isDragging = false;
-      });
+      }, { passive: true });
 
       // Responsive Canvas Resize Handler
       window.addEventListener('resize', () => {
         if (!container) return;
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
+        updateCameraFraming();
         renderer.setSize(container.clientWidth, container.clientHeight);
       });
 
@@ -1276,12 +1438,12 @@
         coreGroup.rotation.y += (targetRotY - coreGroup.rotation.y) * 0.06;
         coreGroup.rotation.x += (targetRotX - coreGroup.rotation.x) * 0.06;
 
-        // Subtle floating motion
-        coreGroup.position.y = Math.sin(elapsed * 1.2) * 0.18;
+        // Subtle floating motion centered comfortably above the hero bottom edge
+        coreGroup.position.y = 0.25 + Math.sin(elapsed * 1.2) * 0.15;
 
         // Gentle drift of ambient particles
         particleField.rotation.y = elapsed * 0.03;
-        particleField.rotation.x = Math.sin(elapsed * 0.2) * 0.05;
+        particleField.rotation.x = Math.sin(elapsed * 0.2) * 0.08;
 
         renderer.render(scene, camera);
       }
@@ -1289,9 +1451,9 @@
       animate();
     }
 
-    window.onload = function () {
+    window.addEventListener('load', () => {
       initThreeHero();
-    };
+    });
   </script>
 </body>
 
