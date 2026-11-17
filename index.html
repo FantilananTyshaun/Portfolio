@@ -1,221 +1,1297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tyshaun Fantilanan - UI Designer</title>
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600&display=swap">
-  <link rel="stylesheet" href="css/stylesheet.css">
-  <link rel="stylesheet" href="css/toggle.css">
+  <title>Tyshaun Fantilanan — UI Designer</title>
+  <!-- Google Fonts: Orbitron for futuristic display & Inter for clean readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js for 3D Interactive Scene -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME TOKENS (DARK FUTURISTIC DEFAULT & CRISP LIGHT MODE)
+       ========================================================================== */
+    :root {
+      --bg-primary: #f4f6fb;
+      --bg-secondary: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(15, 23, 42, 0.08);
+      --glass-shadow: 0 12px 40px -10px rgba(15, 23, 42, 0.08);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent-1: #0284c7; /* Electric Cyan-Blue */
+      --accent-2: #7c3aed; /* Neon Violet */
+      --accent-glow: rgba(2, 132, 199, 0.25);
+      --grid-color: rgba(15, 23, 42, 0.04);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #05070e;
+      --bg-secondary: #0b0f1d;
+      --glass-bg: rgba(13, 18, 34, 0.62);
+      --glass-border: rgba(56, 189, 248, 0.18);
+      --glass-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.75);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-1: #38bdf8; /* Neon Cyan */
+      --accent-2: #a855f7; /* Cyber Purple */
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --grid-color: rgba(56, 189, 248, 0.05);
+    }
+
+    /* ==========================================================================
+       BASE & SCROLLBAR STYLING
+       ========================================================================== */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.45s ease;
+    }
+
+    /* Architectural Background Grid Overlay */
+    .cyber-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
+    }
+
+    /* Interactive Ambient Cursor Glow */
+    #cursor-glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: opacity 0.3s ease;
+      filter: blur(20px);
+    }
+
+    /* ==========================================================================
+       GLASSMORPHISM & NEON ACCENTS
+       ========================================================================== */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.45s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: var(--accent-1);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       CUSTOM FUTURISTIC THEME TOGGLE SWITCH
+       ========================================================================== */
+    .theme-switch {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: 64px;
+      height: 32px;
+      cursor: pointer;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.12);
+      border: 1px solid var(--glass-border);
+      transition: all 0.35s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7px;
+    }
+
+    [data-theme="dark"] .switch-track {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .switch-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 12px var(--accent-glow);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .theme-switch input:checked ~ .switch-track .switch-thumb {
+      transform: translateX(32px);
+    }
+
+    /* ==========================================================================
+       3D TILT CARDS & INFINITE CAROUSEL
+       ========================================================================== */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    .tilt-inner {
+      transform: translateZ(20px);
+    }
+
+    /* Seamless Carousel Container */
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    }
+
+    .carousel-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .projects-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      padding: 1rem 0.5rem 1.75rem 0.5rem;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .project-card {
+      flex: 0 0 320px;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (min-width: 640px) {
+      .project-card {
+        flex: 0 0 360px;
+      }
+    }
+
+    /* Scroll Reveal Utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
 </head>
 
-<body>
-  <nav>
-    <strong>T.FANTILANAN</strong>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Work</a>
-      <a href="#contact">Contact</a>
+<body class="antialiased selection:bg-sky-500 selection:text-white">
+  <!-- Ambient Background Layers -->
+  <div class="cyber-grid"></div>
+  <div id="cursor-glow" class="hidden md:block"></div>
 
-      <label class="switch">
-        <input type="checkbox" class="toggle" id="checkbox">
-        <span class="slider"></span>
-        <span class="card-side"></span>
+  <!-- ========================================================================
+       STICKY GLASSMORPHIC NAVIGATION
+       ======================================================================== -->
+  <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl glass-panel rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#" class="font-display font-extrabold text-base sm:text-lg tracking-widest flex items-center gap-2.5 group">
+      <span class="w-3 h-3 rounded-full bg-gradient-to-tr from-sky-400 to-purple-500 shadow-[0_0_12px_#38bdf8] group-hover:scale-125 transition-transform"></span>
+      <span>T.FANTILANAN</span>
+    </a>
+
+    <div class="flex items-center gap-3 sm:gap-7">
+      <div class="hidden md:flex items-center gap-7 text-sm font-medium">
+        <a href="#about" class="hover:text-sky-400 transition-colors">About</a>
+        <a href="#skills" class="hover:text-sky-400 transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-sky-400 transition-colors">Work</a>
+        <a href="#contact" class="hover:text-sky-400 transition-colors">Contact</a>
+      </div>
+
+      <!-- Theme Switcher -->
+      <label class="theme-switch" aria-label="Toggle Dark or Light Mode" title="Toggle Theme">
+        <input type="checkbox" id="checkbox" checked>
+        <div class="switch-track">
+          <!-- Sun Icon -->
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+          </svg>
+          <!-- Moon Icon -->
+          <svg class="w-3.5 h-3.5 text-sky-300" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+          <span class="switch-thumb"></span>
+        </div>
       </label>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded-xl border border-slate-500/20 hover:border-sky-400 transition-colors" aria-label="Open Navigation Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <header>
-    <h1>Design and build Future with me!</h1>
-  </header>
+  <!-- Mobile Dropdown Nav -->
+  <div id="mobileMenu" class="fixed top-20 left-1/2 -translate-x-1/2 z-40 w-[94%] glass-panel rounded-2xl p-4 hidden flex-col gap-3 md:hidden text-center font-medium">
+    <a href="#about" class="py-2 rounded-xl hover:bg-sky-500/10 transition-colors mobile-nav-link">About</a>
+    <a href="#skills" class="py-2 rounded-xl hover:bg-sky-500/10 transition-colors mobile-nav-link">Skills</a>
+    <a href="#projects" class="py-2 rounded-xl hover:bg-sky-500/10 transition-colors mobile-nav-link">Work</a>
+    <a href="#contact" class="py-2 rounded-xl hover:bg-sky-500/10 transition-colors mobile-nav-link">Contact</a>
+  </div>
 
-  <section id="about">
-    <h2 class="section-title">About Me</h2>
-    <div class="about-content">
-      <h3>Tyshaun Fantilanan — UI Designer</h3>
-      <p>
-        I am a UI Designer that has a creative mind and a passion for building digital experiences that are both fun and useful. 
-        I know how to use AI in smart ways to make websites more interactive, engaging, and user friendly. I enjoy combining clean design with smooth functionality, 
-        exploring new ideas, and experimenting with technology to create projects that stand out and leave a lasting impression.
+  <!-- ========================================================================
+       HERO SECTION WITH INTERACTIVE 3D THREE.JS CANVAS
+       ======================================================================== -->
+  <header class="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-4 sm:px-8 overflow-hidden">
+    <!-- Interactive 3D WebGL Canvas -->
+    <div id="hero-canvas-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"></div>
+
+    <!-- Hero Foreground Content -->
+    <div class="relative z-10 max-w-5xl mx-auto text-center pointer-events-none select-none">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs sm:text-sm font-medium tracking-wider uppercase mb-6 pointer-events-auto">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="opacity-90">AI-Powered UI / UX Designer</span>
+      </div>
+
+      <h1 class="font-display font-black text-4xl sm:text-6xl md:text-7xl leading-tight tracking-tight mb-6 drop-shadow-sm">
+        Design and build <br class="hidden sm:inline" />
+        <span class="gradient-text">Future with me!</span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-base sm:text-lg opacity-80 mb-9 leading-relaxed px-2">
+        Crafting interactive, futuristic, and human-centered digital interfaces where clean aesthetics meet intelligent functionality.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-4 pointer-events-auto">
+        <a href="#projects" class="px-7 py-3.5 rounded-2xl font-display font-bold text-sm tracking-wider uppercase text-white bg-gradient-to-r from-sky-500 to-purple-600 hover:from-sky-400 hover:to-purple-500 shadow-[0_10px_30px_-5px_rgba(56,189,248,0.5)] hover:shadow-[0_15px_35px_-5px_rgba(168,85,247,0.6)] transform hover:-translate-y-0.5 transition-all">
+          Explore Sample Work
+        </a>
+        <a href="#contact" class="px-7 py-3.5 rounded-2xl font-display font-bold text-sm tracking-wider uppercase glass-panel hover:border-sky-400 transform hover:-translate-y-0.5 transition-all">
+          Get In Touch
+        </a>
+      </div>
+
+      <!-- Interactive 3D Hint -->
+      <p class="mt-10 text-xs opacity-50 tracking-widest uppercase font-display">
+        Drag or move cursor to interact with 3D Core
       </p>
     </div>
-  </section>
+  </header>
 
-  <section id="skills">
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-card">Figma</div>
-      <div class="skill-card">UI / UX Design</div>
-      <div class="skill-card">System Design</div>
-      <div class="skill-card">Web Design</div>
-      <div class="skill-card">Prototyping</div>
-      <div class="skill-card">Wireframing</div>
-      <div class="skill-card">Canva</div>
+  <!-- ========================================================================
+       ABOUT ME SECTION
+       ======================================================================== -->
+  <section id="about" class="relative z-10 py-20 sm:py-28 px-4 sm:px-8 max-w-5xl mx-auto reveal">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
+      <span class="text-xs font-display tracking-widest uppercase text-sky-400">01 // Profile</span>
+    </div>
+    <h2 class="section-title text-3xl sm:text-4xl font-extrabold mb-8">About Me</h2>
+
+    <div class="glass-panel rounded-3xl p-7 sm:p-11 relative overflow-hidden group">
+      <!-- Decorative Corner Accent -->
+      <div class="absolute -top-24 -right-24 w-56 h-56 rounded-full bg-gradient-to-br from-sky-500/20 to-purple-600/20 blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+
+      <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center">
+        <!-- Futuristic Monogram Avatar -->
+        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-sky-500 to-purple-600 p-[2px] shrink-0 shadow-lg">
+          <div class="w-full h-full rounded-2xl bg-slate-950/90 flex items-center justify-center font-display font-black text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-sky-400 to-purple-400">
+            TF
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-display font-bold text-xl sm:text-2xl mb-3 gradient-text">
+            Tyshaun Fantilanan — UI Designer
+          </h3>
+          <p class="text-base sm:text-lg leading-relaxed opacity-85">
+           I am a UI Designer with a strong creative mindset and a passion for developing engaging, user-centered digital experiences. 
+           I leverage AI tools and emerging technologies to enhance website functionality, improve interactivity, and create intuitive user experiences. 
+           By combining clean, modern design with thoughtful functionality, I strive to transform creative ideas into meaningful digital solutions that are both visually appealing and practical.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="projects">
-    <h2 class="section-title">Sample Work</h2>
-    <div class="projects-grid" id="projectGrid">
-      <div class="project-card">
-        <a href="sampleDesign/futuristiceui.html" target="_blank">
-          <img src="assets/futuristic_design1.PNG" alt="Futuristic Clock UI">
-          <div class="project-info">
-            <h3>Futuristic Interface</h3>
-            <p>Interactive UI design using AI-powered components for a futuristic digital clock interface.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/coffee.html" target="_blank">
-          <img src="assets/coffeeshop.PNG" alt="Coffee Shop Design">
-          <div class="project-info">
-            <h3>Coffee Shop</h3>
-            <p>A modern coffee shop website with an inviting UI and smooth user experience for online browsing.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/shoe.html" target="_blank">
-          <img src="assets/shoeweb1.PNG" alt="Shoe Website Design">
-          <div class="project-info">
-            <h3>Shoe Shop</h3>
-            <p>Responsive e-commerce UI for a shoe brand, optimized for browsing and product exploration.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/lto.html" target="_blank">
-          <img src="assets/ltowebdesign.PNG" alt="LTO Website Design">
-          <div class="project-info">
-            <h3>Land Transportation Office</h3>
-            <p>Government-themed interface with clear navigation for LTO services and public information.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/restaurant1.html" target="_blank">
-          <img src="assets/resto1.PNG" alt="Restaurant Website Design">
-          <div class="project-info">
-            <h3>Restaurant</h3>
-            <p>Dynamic restaurant UI with a focus on menu display and booking interactions.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/pamana.html" target="_blank">
-          <img src="assets/pamana.PNG" alt="Paamana Website Design">
-          <div class="project-info">
-            <h3>Bugtong</h3>
-            <p>Interactive web experience showcasing traditional puzzles and cultural storytelling.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/hotel.html" target="_blank">
-          <img src="assets/hotel.PNG" alt="Hotel Website Design">
-          <div class="project-info">
-            <h3>Hotel</h3>
-            <p>Clean and welcoming UI for hotel booking and room exploration.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/car.html" target="_blank">
-          <img src="assets/car.PNG" alt="Car Website Design">
-          <div class="project-info">
-            <h3>Car Game</h3>
-            <p>Gamified interface design for an online car game with interactive elements.</p>
-          </div>
-        </a>
-      </div>
-      <div class="project-card">
-        <a href="sampleDesign/koronadal.html" target="_blank">
-          <img src="assets/explorekoronadal.PNG" alt="Koronadal City Guide">
-          <div class="project-info">
-            <h3>Koronadal City Guide</h3>
-            <p>Tourism guide website highlighting local attractions with maps and AI-assisted suggestions.</p>
-          </div>
-        </a>
-      </div>
-    </div> 
+  <!-- ========================================================================
+       SKILLS SECTION (3D TILT CARDS)
+       ======================================================================== -->
+  <section id="skills" class="relative z-10 py-16 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto reveal">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
+      <span class="text-xs font-display tracking-widest uppercase text-sky-400">02 // Capabilities</span>
+    </div>
+    <h2 class="section-title text-3xl sm:text-4xl font-extrabold mb-10">Skills</h2>
 
-    <div class="project-thumbnails">
-      <a href="sampleDesign/futuristiceui.html" target="_blank"><img src="assets/futuristic_design1.PNG" alt="Thumbnail 1"></a>
-      <a href="sampleDesign/coffee.html" target="_blank"><img src="assets/coffeeshop.PNG" alt="Thumbnail 2"></a>
-      <a href="sampleDesign/shoe.html" target="_blank"><img src="assets/shoeweb1.PNG" alt="Thumbnail 3"></a>
-      <a href="sampleDesign/lto.html" target="_blank"><img src="assets/ltowebdesign.PNG" alt="Thumbnail 4"></a>
-      <a href="sampleDesign/restaurant1.html" target="_blank"><img src="assets/resto1.PNG" alt="Thumbnail 5"></a>
-      <a href="sampleDesign/pamana.html" target="_blank"><img src="assets/pamana.PNG" alt="Thumbnail 6"></a>
-      <a href="sampleDesign/hotel.html" target="_blank"><img src="assets/hotel.PNG" alt="Thumbnail 7"></a>
-      <a href="sampleDesign/car.html" target="_blank"><img src="assets/car.PNG" alt="Thumbnail 8"></a>
-      <a href="sampleDesign/koronadal.html" target="_blank"><img src="assets/explorekoronadal.PNG" alt="Thumbnail 9"></a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Skill 1: Figma -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 2H8.5a3.5 3.5 0 100 7H12V2zm0 0h3.5a3.5 3.5 0 110 7H12V2zm0 7H8.5a3.5 3.5 0 100 7H12V9zm0 7H8.5a3.5 3.5 0 103.5 3.5V16zm3.5-7a3.5 3.5 0 110 7 3.5 3.5 0 010-7z" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Figma</h3>
+          <p class="text-xs opacity-65 mt-0.5">Component Systems</p>
+        </div>
+      </div>
+
+      <!-- Skill 2: UI / UX Design -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">UI / UX Design</h3>
+          <p class="text-xs opacity-65 mt-0.5">User-Centered Flows</p>
+        </div>
+      </div>
+
+      <!-- Skill 3: System Design -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">System Design</h3>
+          <p class="text-xs opacity-65 mt-0.5">Scalable Architecture</p>
+        </div>
+      </div>
+
+      <!-- Skill 4: Web Design -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-400/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Web Design</h3>
+          <p class="text-xs opacity-65 mt-0.5">Responsive Aesthetics</p>
+        </div>
+      </div>
+
+      <!-- Skill 5: Prototyping -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-fuchsia-500/15 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Prototyping</h3>
+          <p class="text-xs opacity-65 mt-0.5">Interactive Motion</p>
+        </div>
+      </div>
+
+      <!-- Skill 6: Wireframing -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Wireframing</h3>
+          <p class="text-xs opacity-65 mt-0.5">Structural Blueprints</p>
+        </div>
+      </div>
+
+      <!-- Skill 7: Canva -->
+      <div class="tilt-card glass-panel rounded-2xl p-6 flex items-center gap-4 group cursor-default sm:col-span-2 lg:col-span-2">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+          </svg>
+        </div>
+        <div class="tilt-inner">
+          <h3 class="font-display font-bold text-base">Canva</h3>
+          <p class="text-xs opacity-65 mt-0.5">Visual Storytelling & Rapid Graphics</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="contact">
-    <h2 class="section-title">Get In Touch</h2>
+  <!-- ========================================================================
+       SAMPLE WORK SECTION (INFINITE CAROUSEL + 3D TILT + THUMBNAIL STRIP)
+       ======================================================================== -->
+  <section id="projects" class="relative z-10 py-20 sm:py-28 px-4 sm:px-8 max-w-7xl mx-auto reveal">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="h-px w-10 bg-gradient-to-r from-sky-400 to-purple-500"></span>
+          <span class="text-xs font-display tracking-widest uppercase text-sky-400">03 // Portfolio Showcase</span>
+        </div>
+        <h2 class="section-title text-3xl sm:text-4xl font-extrabold">Sample Work</h2>
+      </div>
+      <p class="text-xs sm:text-sm opacity-70 font-medium">
+        Hover over carousel to pause &bull; Click any project to launch
+      </p>
+    </div>
 
-    <p>Email: <a href="mailto:shaunrull6@gmail.com">tyshaunfantilanan5@gmail.com</a></p>
-    <p>Instagram: <a href="https://www.instagram.com/_tshn.rf/" target="_blank">@_tshn.rf</a></p>
+    <!-- Seamless Infinite Auto-Scrolling Carousel -->
+    <div class="carousel-wrapper" id="carouselWrapper">
+      <div class="projects-track" id="projectGrid">
+        <!-- Project 1: Futuristic Interface -->
+        <a href="sampleDesign/futuristiceui.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-slate-900">
+            <img src="assets/futuristic_design1.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/090d16/38bdf8?text=FUTURISTIC+CLOCK+UI';"
+                 alt="Futuristic Clock UI"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-sky-400 border border-sky-400/30 backdrop-blur-md">AI UI</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Futuristic Interface</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Interactive UI design using AI-powered components for a futuristic digital clock interface.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 2: Coffee Shop -->
+        <a href="sampleDesign/coffee.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-amber-950">
+            <img src="assets/coffeeshop.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/27160c/f59e0b?text=ARTISAN+COFFEE+SHOP';"
+                 alt="Coffee Shop Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-amber-400 border border-amber-400/30 backdrop-blur-md">Web UX</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Coffee Shop</h3>
+              <p class="text-sm opacity-75 leading-relaxed">A modern coffee shop website with an inviting UI and smooth user experience for online browsing.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 3: Shoe Shop -->
+        <a href="sampleDesign/shoe.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-indigo-950">
+            <img src="assets/shoeweb1.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/1e1b4b/a855f7?text=SNEAKER+E-COMMERCE';"
+                 alt="Shoe Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-purple-400 border border-purple-400/30 backdrop-blur-md">E-Commerce</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Shoe Shop</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Responsive e-commerce UI for a shoe brand, optimized for browsing and product exploration.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 4: Land Transportation Office -->
+        <a href="sampleDesign/lto.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-blue-950">
+            <img src="assets/ltowebdesign.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/0f294a/60a5fa?text=LTO+PORTAL+SYSTEM';"
+                 alt="LTO Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-blue-400 border border-blue-400/30 backdrop-blur-md">Gov Portal</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Land Transportation Office</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Government-themed interface with clear navigation for LTO services and public information.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 5: Restaurant -->
+        <a href="sampleDesign/restaurant1.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-rose-950">
+            <img src="assets/resto1.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/3b0d18/fb7185?text=CULINARY+DINING+UI';"
+                 alt="Restaurant Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-rose-400 border border-rose-400/30 backdrop-blur-md">Hospitality</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Restaurant</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Dynamic restaurant UI with a focus on menu display and booking interactions.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 6: Bugtong -->
+        <a href="sampleDesign/pamana.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-emerald-950">
+            <img src="assets/pamana.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/063729/34d399?text=BUGTONG+HERITAGE+UI';"
+                 alt="Paamana Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-emerald-400 border border-emerald-400/30 backdrop-blur-md">Interactive</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Bugtong</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Interactive web experience showcasing traditional puzzles and cultural storytelling.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 7: Hotel -->
+        <a href="sampleDesign/hotel.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-teal-950">
+            <img src="assets/hotel.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/0f2e33/2dd4bf?text=LUXURY+HOTEL+BOOKING';"
+                 alt="Hotel Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-teal-400 border border-teal-400/30 backdrop-blur-md">Booking UI</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Hotel</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Clean and welcoming UI for hotel booking and room exploration.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 8: Car Game -->
+        <a href="sampleDesign/car.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-fuchsia-950">
+            <img src="assets/car.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/2e0938/e879f9?text=CYBER+RACING+GAME+UI';"
+                 alt="Car Website Design"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-fuchsia-400 border border-fuchsia-400/30 backdrop-blur-md">Gamified</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Car Game</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Gamified interface design for an online car game with interactive elements.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 9: Koronadal City Guide -->
+        <a href="sampleDesign/koronadal.html" target="_blank" class="project-card tilt-card glass-panel group">
+          <div class="relative h-48 overflow-hidden bg-cyan-950">
+            <img src="assets/explorekoronadal.PNG"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x360/083344/22d3ee?text=KORONADAL+CITY+GUIDE';"
+                 alt="Koronadal City Guide"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[10px] font-display uppercase tracking-wider bg-slate-950/80 text-cyan-400 border border-cyan-400/30 backdrop-blur-md">AI Tourism</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between tilt-inner">
+            <div>
+              <h3 class="font-display font-bold text-lg mb-2 group-hover:text-sky-400 transition-colors">Koronadal City Guide</h3>
+              <p class="text-sm opacity-75 leading-relaxed">Tourism guide website highlighting local attractions with maps and AI-assisted suggestions.</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-500/15 flex items-center justify-between text-xs font-display text-sky-400">
+              <span>Launch Preview</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick-Jump Project Thumbnails Strip -->
+    <div class="mt-8 glass-panel rounded-2xl p-4">
+      <div class="text-xs font-display uppercase tracking-wider opacity-60 mb-3 text-center">Quick Gallery Access</div>
+      <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2.5">
+        <a href="sampleDesign/futuristiceui.html" target="_blank" title="Futuristic Interface" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/futuristic_design1.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/090d16/38bdf8?text=01';" alt="Thumbnail 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/coffee.html" target="_blank" title="Coffee Shop" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/coffeeshop.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/27160c/f59e0b?text=02';" alt="Thumbnail 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/shoe.html" target="_blank" title="Shoe Shop" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/shoeweb1.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/1e1b4b/a855f7?text=03';" alt="Thumbnail 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/lto.html" target="_blank" title="Land Transportation Office" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/ltowebdesign.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/0f294a/60a5fa?text=04';" alt="Thumbnail 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/restaurant1.html" target="_blank" title="Restaurant" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/resto1.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/3b0d18/fb7185?text=05';" alt="Thumbnail 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/pamana.html" target="_blank" title="Bugtong" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/pamana.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/063729/34d399?text=06';" alt="Thumbnail 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/hotel.html" target="_blank" title="Hotel" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/hotel.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/0f2e33/2dd4bf?text=07';" alt="Thumbnail 7" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/car.html" target="_blank" title="Car Game" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/car.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/2e0938/e879f9?text=08';" alt="Thumbnail 8" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+        <a href="sampleDesign/koronadal.html" target="_blank" title="Koronadal City Guide" class="group relative rounded-xl overflow-hidden aspect-video border border-slate-500/20 hover:border-sky-400 transition-all">
+          <img src="assets/explorekoronadal.PNG" onerror="this.onerror=null;this.src='https://placehold.co/200x120/083344/22d3ee?text=09';" alt="Thumbnail 9" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+        </a>
+      </div>
+    </div>
   </section>
 
-  <footer>
+  <!-- ========================================================================
+       CONTACT SECTION
+       ======================================================================== -->
+  <section id="contact" class="relative z-10 py-20 px-4 sm:px-8 max-w-4xl mx-auto text-center reveal">
+    <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+      <div class="inline-block px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-display uppercase tracking-widest mb-4">
+        04 // Connect
+      </div>
+      <h2 class="section-title text-3xl sm:text-4xl font-extrabold mb-4">Get In Touch</h2>
+      <p class="opacity-75 max-w-lg mx-auto mb-8 text-sm sm:text-base">
+        Ready to collaborate on futuristic interfaces, web experiences, or AI-driven UI systems? Reach out directly below.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <!-- Email Link + Copy Button -->
+        <div class="flex items-center glass-panel rounded-2xl px-4 py-3 gap-3 w-full sm:w-auto justify-between">
+          <a href="mailto:shaunrull6@gmail.com" class="flex items-center gap-2.5 text-sm font-medium hover:text-sky-400 transition-colors truncate">
+            <svg class="w-5 h-5 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span>tyshaunfantilanan5@gmail.com</span>
+          </a>
+          <button id="copyEmailBtn" class="px-2.5 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/30 text-sky-400 text-xs font-display uppercase tracking-wider transition-colors shrink-0" title="Copy Email Address">
+            Copy
+          </button>
+        </div>
+
+        <!-- Instagram Link -->
+        <a href="https://www.instagram.com/tshn.rf/" target="_blank" class="flex items-center justify-center gap-2.5 glass-panel rounded-2xl px-6 py-3.5 text-sm font-medium hover:border-purple-400 hover:text-purple-400 transition-all w-full sm:w-auto">
+          <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          <span>@tshn.rf</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="relative z-10 py-8 px-4 text-center text-xs sm:text-sm opacity-65 border-t border-slate-500/15">
     &copy; 2026 Tyshaun Fantilanan / UI Designer. All rights reserved.
   </footer>
 
+  <!-- Custom Non-Intrusive Notification Toast -->
+  <div id="toast" class="glass-panel rounded-2xl px-5 py-3 text-sm font-medium flex items-center gap-2.5 border-sky-400">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+    <span id="toastMessage">Email copied to clipboard!</span>
+  </div>
+
+  <!-- ========================================================================
+       INTERACTIVE SCRIPTS: THREE.JS 3D SCENE, THEME, CAROUSEL & 3D TILT
+       ======================================================================== -->
   <script>
+    // ========================================================================
+    // 1. THEME MANAGEMENT (DARK / LIGHT MODE WITH LOCALSTORAGE)
+    // ========================================================================
     const checkbox = document.getElementById('checkbox');
     const root = document.documentElement;
-    const projectGrid = document.getElementById('projectGrid');
+    let threeSceneThemeCallback = null;
 
-    // --- Theme Management ---
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    if (savedTheme === 'light') {
+      root.removeAttribute('data-theme');
+      checkbox.checked = false;
+    } else {
       root.setAttribute('data-theme', 'dark');
       checkbox.checked = true;
-
     }
 
     checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
+      const isDark = checkbox.checked;
+      if (isDark) {
         root.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
       } else {
         root.removeAttribute('data-theme');
         localStorage.setItem('theme', 'light');
       }
+      if (typeof threeSceneThemeCallback === 'function') {
+        threeSceneThemeCallback(isDark);
+      }
     });
 
-    // --- Infinite Seamless Loop Logic ---
-    
-    const cards = Array.from(projectGrid.children);
-    cards.forEach(card => {
+    // ========================================================================
+    // 2. MOBILE NAVIGATION & AMBIENT CURSOR GLOW
+    // ========================================================================
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+      });
+    });
+
+    const cursorGlow = document.getElementById('cursor-glow');
+    window.addEventListener('mousemove', (e) => {
+      if (cursorGlow) {
+        cursorGlow.style.left = `${e.clientX}px`;
+        cursorGlow.style.top = `${e.clientY}px`;
+      }
+    });
+
+    // ========================================================================
+    // 3. COPY EMAIL TO CLIPBOARD WITH CUSTOM TOAST FEEDBACK
+    // ========================================================================
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2800);
+    }
+
+    copyEmailBtn.addEventListener('click', () => {
+      const emailText = 'tyshaunfantilanan5@gmail.com';
+      const tempInput = document.createElement('input');
+      tempInput.value = emailText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('Email copied to clipboard!');
+      } catch (err) {
+        showToast('Email: ' + emailText);
+      }
+      document.body.removeChild(tempInput);
+    });
+
+    // ========================================================================
+    // 3B. 3D PERSPECTIVE TILT EFFECT ON CARDS
+    // ========================================================================
+    function bindTiltEffects() {
+      const tiltCards = document.querySelectorAll('.tilt-card');
+      tiltCards.forEach(card => {
+        if (card.dataset.tiltBound === 'true') return;
+        card.dataset.tiltBound = 'true';
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -6;
+          const rotateY = ((x - centerX) / centerX) * 6;
+          card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+      });
+    }
+
+    // ========================================================================
+    // 4. SEAMLESS INFINITE AUTO-SCROLLING PROJECT CAROUSEL (GPU TRANSLATE3D)
+    // ========================================================================
+    const projectGrid = document.getElementById('projectGrid');
+    const carouselWrapper = document.getElementById('carouselWrapper');
+
+    // Clone original cards for seamless infinite loop
+    const originalCards = Array.from(projectGrid.children);
+    originalCards.forEach(card => {
       const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
       projectGrid.appendChild(clone);
     });
 
-    let scrollPos = 0;
-    const scrollWidth = projectGrid.scrollWidth / 2;
- 
-    function smoothScroll() {
-      if (projectGrid) {
-        scrollPos += 0.8; 
-        
+    // Re-bind 3D tilt effects including cloned cards
+    bindTiltEffects();
 
-        if (scrollPos >= scrollWidth) {
-          scrollPos = 0;
-        }
-        
-        projectGrid.scrollLeft = scrollPos;
-      }
-      requestAnimationFrame(smoothScroll);
+    let trackOffset = 0;
+    let isCarouselPaused = false;
+    let isCarouselDragging = false;
+    let dragStartX = 0;
+    let dragStartOffset = 0;
+    let hasDragged = false;
+    let resumeTimer = null;
+
+    function getLoopWidth() {
+      // Exact half-track width including the 1.5rem (24px) flex gap between sets
+      const gap = parseFloat(getComputedStyle(projectGrid).columnGap || getComputedStyle(projectGrid).gap) || 24;
+      return (projectGrid.scrollWidth + gap) / 2;
     }
 
-    requestAnimationFrame(smoothScroll);
+    function normalizeOffset(offset, loopWidth) {
+      if (loopWidth <= 0) return 0;
+      let normalized = offset % loopWidth;
+      if (normalized < 0) normalized += loopWidth;
+      return normalized;
+    }
+
+    // Pause on hover
+    carouselWrapper.addEventListener('mouseenter', () => {
+      isCarouselPaused = true;
+    });
+
+    carouselWrapper.addEventListener('mouseleave', () => {
+      if (!isCarouselDragging) {
+        isCarouselPaused = false;
+      }
+    });
+
+    // Manual Mouse Drag Scrolling
+    carouselWrapper.addEventListener('mousedown', (e) => {
+      isCarouselDragging = true;
+      isCarouselPaused = true;
+      hasDragged = false;
+      dragStartX = e.clientX;
+      dragStartOffset = trackOffset;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isCarouselDragging) return;
+      const deltaX = e.clientX - dragStartX;
+      if (Math.abs(deltaX) > 5) hasDragged = true;
+      const loopWidth = getLoopWidth();
+      trackOffset = normalizeOffset(dragStartOffset - deltaX, loopWidth);
+      projectGrid.style.transform = `translate3d(${-trackOffset}px, 0, 0)`;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isCarouselDragging) return;
+      isCarouselDragging = false;
+      setTimeout(() => {
+        if (!carouselWrapper.matches(':hover')) {
+          isCarouselPaused = false;
+        }
+      }, 400);
+    });
+
+    // Prevent accidental link navigation when dragging
+    projectGrid.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        hasDragged = false;
+      }
+    }, true);
+
+    // Manual Touch Swipe Scrolling
+    carouselWrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        clearTimeout(resumeTimer);
+        isCarouselDragging = true;
+        isCarouselPaused = true;
+        hasDragged = false;
+        dragStartX = e.touches[0].clientX;
+        dragStartOffset = trackOffset;
+      }
+    }, { passive: true });
+
+    carouselWrapper.addEventListener('touchmove', (e) => {
+      if (!isCarouselDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - dragStartX;
+      if (Math.abs(deltaX) > 5) hasDragged = true;
+      const loopWidth = getLoopWidth();
+      trackOffset = normalizeOffset(dragStartOffset - deltaX, loopWidth);
+      projectGrid.style.transform = `translate3d(${-trackOffset}px, 0, 0)`;
+    }, { passive: true });
+
+    carouselWrapper.addEventListener('touchend', () => {
+      isCarouselDragging = false;
+      resumeTimer = setTimeout(() => {
+        isCarouselPaused = false;
+      }, 1200);
+    }, { passive: true });
+
+    // Horizontal Trackpad / Shift+Wheel Support
+    carouselWrapper.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+        e.preventDefault();
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        const loopWidth = getLoopWidth();
+        trackOffset = normalizeOffset(trackOffset + delta, loopWidth);
+        projectGrid.style.transform = `translate3d(${-trackOffset}px, 0, 0)`;
+      }
+    }, { passive: false });
+
+    // Continuous 60fps Marquee Animation Loop
+    let lastTimestamp = null;
+    const scrollSpeedPxPerSec = 55;
+
+    function animateCarousel(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const deltaSeconds = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
+      lastTimestamp = timestamp;
+
+      if (projectGrid && !isCarouselPaused && !isCarouselDragging) {
+        const loopWidth = getLoopWidth();
+        if (loopWidth > 0) {
+          trackOffset = normalizeOffset(trackOffset + scrollSpeedPxPerSec * deltaSeconds, loopWidth);
+          projectGrid.style.transform = `translate3d(${-trackOffset}px, 0, 0)`;
+        }
+      }
+      requestAnimationFrame(animateCarousel);
+    }
+
+    requestAnimationFrame(animateCarousel);
+
+    // ========================================================================
+    // 5. SCROLL REVEAL OBSERVER
+    // ========================================================================
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ========================================================================
+    // 6. INTERACTIVE THREE.JS 3D HERO SCENE (STARTED ON WINDOW.ONLOAD)
+    // ========================================================================
+    function initThreeHero() {
+      const container = document.getElementById('hero-canvas-container');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.z = 6.5;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Group holding all interactive 3D elements
+      const coreGroup = new THREE.Group();
+      scene.add(coreGroup);
+
+      // Primary Sculptural TorusKnot (Glassmorphic + Wireframe Dual Layer)
+      const knotGeo = new THREE.TorusKnotGeometry(1.75, 0.52, 160, 28, 2, 3);
+      const innerMat = new THREE.MeshPhysicalMaterial({
+        color: 0x0ea5e9,
+        emissive: 0x1e1b4b,
+        roughness: 0.2,
+        metalness: 0.75,
+        transparent: true,
+        opacity: 0.55
+      });
+      const knotMesh = new THREE.Mesh(knotGeo, innerMat);
+      coreGroup.add(knotMesh);
+
+      // Outer Neon Wireframe Mesh
+      const wireMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      const wireMesh = new THREE.Mesh(knotGeo, wireMat);
+      wireMesh.scale.set(1.03, 1.03, 1.03);
+      coreGroup.add(wireMesh);
+
+      // Orbital Tech Ring
+      const ringGeo = new THREE.TorusGeometry(3.1, 0.018, 16, 120);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xa855f7,
+        transparent: true,
+        opacity: 0.65
+      });
+      const orbitalRing = new THREE.Mesh(ringGeo, ringMat);
+      orbitalRing.rotation.x = Math.PI / 2.6;
+      orbitalRing.rotation.y = Math.PI / 6;
+      coreGroup.add(orbitalRing);
+
+      // Second Counter-Rotating Ring
+      const ring2Geo = new THREE.TorusGeometry(3.55, 0.012, 16, 120);
+      const ring2Mat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.45
+      });
+      const orbitalRing2 = new THREE.Mesh(ring2Geo, ring2Mat);
+      orbitalRing2.rotation.x = -Math.PI / 3;
+      orbitalRing2.rotation.y = -Math.PI / 5;
+      coreGroup.add(orbitalRing2);
+
+      // Floating Cyber Particle Constellation
+      const particleCount = 420;
+      const particleGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 16;
+        positions[i + 1] = (Math.random() - 0.5) * 12;
+        positions[i + 2] = (Math.random() - 0.5) * 12;
+      }
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particleMat = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.045,
+        transparent: true,
+        opacity: 0.75
+      });
+      const particleField = new THREE.Points(particleGeo, particleMat);
+      scene.add(particleField);
+
+      // Dynamic Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const pointLight1 = new THREE.PointLight(0x38bdf8, 2.5, 20);
+      pointLight1.position.set(4, 4, 5);
+      scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0xa855f7, 2.5, 20);
+      pointLight2.position.set(-4, -3, 4);
+      scene.add(pointLight2);
+
+      // Theme Sync Callback for 3D Materials
+      threeSceneThemeCallback = (isDark) => {
+        if (isDark) {
+          innerMat.color.setHex(0x0ea5e9);
+          innerMat.emissive.setHex(0x1e1b4b);
+          wireMat.color.setHex(0x38bdf8);
+          wireMat.opacity = 0.35;
+          particleMat.color.setHex(0x38bdf8);
+        } else {
+          innerMat.color.setHex(0x0284c7);
+          innerMat.emissive.setHex(0xc7d2fe);
+          wireMat.color.setHex(0x7c3aed);
+          wireMat.opacity = 0.28;
+          particleMat.color.setHex(0x0284c7);
+        }
+      };
+      threeSceneThemeCallback(checkbox.checked);
+
+      // Interactive Mouse & Drag Controls
+      let targetRotX = 0;
+      let targetRotY = 0;
+      let isDragging = false;
+      let prevMouseX = 0;
+      let prevMouseY = 0;
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          const deltaX = e.clientX - prevMouseX;
+          const deltaY = e.clientY - prevMouseY;
+          targetRotY += deltaX * 0.008;
+          targetRotX += deltaY * 0.008;
+          prevMouseX = e.clientX;
+          prevMouseY = e.clientY;
+        } else {
+          const normX = (e.clientX / window.innerWidth) * 2 - 1;
+          const normY = (e.clientY / window.innerHeight) * 2 - 1;
+          targetRotY = normX * 0.55;
+          targetRotX = normY * 0.45;
+        }
+      });
+
+      // Touch Drag Support for Mobile
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          prevMouseX = e.touches[0].clientX;
+          prevMouseY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      container.addEventListener('touchmove', (e) => {
+        if (isDragging && e.touches.length === 1) {
+          const deltaX = e.touches[0].clientX - prevMouseX;
+          const deltaY = e.touches[0].clientY - prevMouseY;
+          targetRotY += deltaX * 0.01;
+          targetRotX += deltaY * 0.01;
+          prevMouseX = e.touches[0].clientX;
+          prevMouseY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      container.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+
+      // Responsive Canvas Resize Handler
+      window.addEventListener('resize', () => {
+        if (!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      // Animation Loop
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsed = clock.getElapsedTime();
+
+        // Continuous organic rotation + smooth cursor/drag interpolation
+        knotMesh.rotation.z = elapsed * 0.18;
+        wireMesh.rotation.z = elapsed * 0.18;
+
+        orbitalRing.rotation.z = -elapsed * 0.35;
+        orbitalRing2.rotation.z = elapsed * 0.25;
+
+        coreGroup.rotation.y += (targetRotY - coreGroup.rotation.y) * 0.06;
+        coreGroup.rotation.x += (targetRotX - coreGroup.rotation.x) * 0.06;
+
+        // Subtle floating motion
+        coreGroup.position.y = Math.sin(elapsed * 1.2) * 0.18;
+
+        // Gentle drift of ambient particles
+        particleField.rotation.y = elapsed * 0.03;
+        particleField.rotation.x = Math.sin(elapsed * 0.2) * 0.05;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    }
+
+    window.onload = function () {
+      initThreeHero();
+    };
   </script>
 </body>
 
